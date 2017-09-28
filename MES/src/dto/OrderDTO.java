@@ -6,7 +6,6 @@
 package dto;
 
 import java.util.Date;
-import dao.OrderStatus;
 
 /**
  *

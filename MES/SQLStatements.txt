@@ -1,1 +1,2 @@
-table = SELECT * from prodtabel where DATAREADID = Firm 75 and
+table = SELECT * from prodtabel where DATAREADID = ''Firm 75'' and production = ''{0}''
+allOrders = SELECT * from prodtabel where DATAREADID= ''Firm 75''

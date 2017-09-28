@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Properties;
 
 public class OrderDAO implements IOrderDAO{
@@ -42,5 +43,21 @@ public class OrderDAO implements IOrderDAO{
     @Override
     public void updateOrder(OrderDTO order, IConnector connection) {
 
+    }
+
+    @Override
+    public ArrayList<OrderDTO> getAllOrders(IConnector connection) {
+        ArrayList<OrderDTO> r = new ArrayList<OrderDTO>();
+        String query = getStatement("table");
+        ResultSet res;
+        try {
+            res=connection.doQuery(query);
+            while(res.next()){
+                r.add(new OrderDTO(res.getString(0),res.getInt(1),res.getInt(6),res.getDate(8)));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return r;
     }
 }
