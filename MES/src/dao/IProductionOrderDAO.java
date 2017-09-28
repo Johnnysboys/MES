@@ -1,8 +1,10 @@
 package dao;
 
-import dto.ProductionOrderDTO;
+import dto.OrderDTO;
 
 public interface IProductionOrderDAO {
-    ProductionOrderDTO getProductionOrder();
+    
+    
+    OrderDTO getProductionOrder();
 
 }
