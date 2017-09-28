@@ -13,7 +13,7 @@ import dao.OrderStatus;
  * @author Troels
  */
 public class OrderDTO {
-    private int orderNumber;
+    private String orderNumber;
     private int articleNumber;
     private int quantity;
     private Date orderedFor;
@@ -22,7 +22,7 @@ public class OrderDTO {
    
 
 
-public OrderDTO(int orderNumber, int articleNumber, int quantity, Date orderedFor){
+public OrderDTO(String orderNumber, int articleNumber, int quantity, Date orderedFor){
     orderNumber = this.orderNumber;
     articleNumber = this.articleNumber;
     quantity = this.quantity;

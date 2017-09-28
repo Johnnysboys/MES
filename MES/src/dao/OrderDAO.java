@@ -29,12 +29,14 @@ public class OrderDAO implements IOrderDAO{
     public OrderDTO getOrder(String productionID, IConnector connection) {
 
         String query = MessageFormat.format(getStatement("table"), productionID);
+        ResultSet res;
         try {
-            ResultSet res =connection.doQuery(query);
+            res =connection.doQuery(query);
+            return new OrderDTO(res.getString(0),res.getInt(1),res.getInt(6),res.getDate(8));
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return query;
+        return null;
     }
 
     @Override
