@@ -23,12 +23,51 @@ public class OrderDTO {
 
 
 public OrderDTO(String orderNumber, int articleNumber, int quantity, Date orderedFor){
-    orderNumber = this.orderNumber;
-    articleNumber = this.articleNumber;
-    quantity = this.quantity;
-    orderedFor = this.orderedFor;
-    orderedFor = this.toBeDeliveredOn;
+    this.orderNumber = orderNumber;
+    this.articleNumber = articleNumber;
+    this.quantity = quantity;
+    this.orderedFor = orderedFor;
+    this.toBeDeliveredOn = this.orderedFor;
     this.status = OrderStatus.UNSCHEDULED;
-    
 }
+
+    public String getOrderNumber() {
+        return orderNumber;
+    }
+
+    public int getArticleNumber() {
+        return articleNumber;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public Date getOrderedFor() {
+        return orderedFor;
+    }
+
+    public void setOrderedFor(Date orderedFor) {
+        this.orderedFor = orderedFor;
+    }
+
+    public Date getToBeDeliveredOn() {
+        return toBeDeliveredOn;
+    }
+
+    public void setToBeDeliveredOn(Date toBeDeliveredOn) {
+        this.toBeDeliveredOn = toBeDeliveredOn;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
+    }
 }
