@@ -1,59 +1,34 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package dto;
 
-import java.util.Date;//skift evt. til java.sql.Date;
+import java.util.Date;
+import dao.OrderStatus;
 
+/**
+ *
+ * @author Troels
+ */
 public class OrderDTO {
-    private String productID;
-    private int itemNumber;
+    private int orderNumber;
+    private int articleNumber;
     private int quantity;
-    private Date delivery;
-    private String status;
+    private Date orderedFor;
+    private Date toBeDeliveredOn;
+    private OrderStatus status;
+   
 
-    public OrderDTO(String productID, int itemNumber, int quantity, Date delivery, String status){
-        this.productID=productID;
-        this.itemNumber=itemNumber;
-        this.quantity=quantity;
-        this.delivery=delivery;
-        this.status=status;
-    }
 
-    public String getProductID() {
-        return productID;
-    }
-
-    public void setProductID(String productID) {
-        this.productID = productID;
-    }
-
-    public int getItemNumber() {
-        return itemNumber;
-    }
-
-    public void setItemNumber(int itemNumber) {
-        this.itemNumber = itemNumber;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public Date getDelivery() {
-        return delivery;
-    }
-
-    public void setDelivery(Date delivery) {
-        this.delivery = delivery;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
+public OrderDTO(int orderNumber, int articleNumber, int quantity, Date orderedFor){
+    orderNumber = this.orderNumber;
+    articleNumber = this.articleNumber;
+    quantity = this.quantity;
+    orderedFor = this.orderedFor;
+    orderedFor = this.toBeDeliveredOn;
+    this.status = OrderStatus.UNSCHEDULED;
+    
+}
 }
