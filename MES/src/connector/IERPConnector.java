@@ -3,7 +3,7 @@ package connector;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public interface IConnector {
+public interface IERPConnector {
     void connectToDatabase() throws InstantiationException, IllegalAccessException,
             ClassNotFoundException, SQLException;
     ResultSet doQuery(String sqlQuery)throws SQLException;

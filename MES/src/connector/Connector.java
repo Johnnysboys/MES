@@ -2,7 +2,7 @@ package connector;
 
 import java.sql.*;
 
-public class Connector implements IConnector {
+public class Connector implements IERPConnector {
     private Connection conn;
     private Statement stm;
 

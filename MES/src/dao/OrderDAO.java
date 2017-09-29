@@ -1,6 +1,5 @@
 package dao;
 
-import connector.IConnector;
 import dto.OrderDTO;
 
 import java.io.File;
@@ -11,6 +10,7 @@ import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Properties;
+import connector.IERPConnector;
 
 public class OrderDAO implements IOrderDAO{
     private String getStatement(String text){
@@ -27,7 +27,7 @@ public class OrderDAO implements IOrderDAO{
     }
 
     @Override
-    public OrderDTO getOrder(String productionID, IConnector connection) {
+    public OrderDTO getOrder(String productionID, IERPConnector connection) {
 
         String query = MessageFormat.format(getStatement("table"), productionID);
         ResultSet res;
@@ -41,12 +41,12 @@ public class OrderDAO implements IOrderDAO{
     }
 
     @Override
-    public void updateOrder(OrderDTO order, IConnector connection) {
+    public void updateOrder(OrderDTO order, IERPConnector connection) {
 
     }
 
     @Override
-    public ArrayList<OrderDTO> getAllOrders(IConnector connection) {
+    public ArrayList<OrderDTO> getAllOrders(IERPConnector connection) {
         ArrayList<OrderDTO> r = new ArrayList<OrderDTO>();
         String query = getStatement("table");
         ResultSet res;
