@@ -30,6 +30,10 @@ public OrderDTO(String orderNumber, int articleNumber, int quantity, Date ordere
     this.status = OrderStatus.UNSCHEDULED;
 }
 
+    public OrderDTO() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public String getOrderNumber() {
         return orderNumber;
     }

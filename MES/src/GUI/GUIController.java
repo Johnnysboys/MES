@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import mes.MESController;
 
 /**
  *
@@ -28,9 +29,16 @@ public class GUIController implements Initializable {
     @FXML
     private TableColumn<?, ?> OrderDonePane;
     
+    MESController MESController = new MESController();
+    
     private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
+     
+    }
+    
+    private void handleNewOrderPane(){
+        MESController.getERPOrderList(connection);
+        
+        
     }
     
     @Override
