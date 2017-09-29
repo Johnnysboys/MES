@@ -8,4 +8,5 @@ public interface IERPConnector {
             ClassNotFoundException, SQLException;
     ResultSet doQuery(String sqlQuery)throws SQLException;
     int doUpdate(String sqlUpdateStatement) throws SQLException;
+    void closeConnection() throws SQLException;
 }

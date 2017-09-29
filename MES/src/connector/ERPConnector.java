@@ -2,7 +2,7 @@ package connector;
 
 import java.sql.*;
 
-public class Connector implements IERPConnector {
+public class ERPConnector implements IERPConnector {
     private Connection conn;
     private Statement stm;
 
@@ -26,5 +26,10 @@ public class Connector implements IERPConnector {
     public int doUpdate(String cmd) throws SQLException
     {
         return stm.executeUpdate(cmd);
+    }
+
+    public void closeConnection() throws SQLException{
+        stm.close();
+        conn.close();
     }
 }

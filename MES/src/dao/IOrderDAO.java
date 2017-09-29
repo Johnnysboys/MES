@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface IOrderDAO {
-    OrderDTO getOrder(String productionID, IERPConnector connection);
-    void updateOrder(OrderDTO order, IERPConnector connection);
-    public ArrayList<OrderDTO> getAllOrders(IERPConnector connection);
+    OrderDTO getOrder(String productionID);
+    void updateOrder(OrderDTO order);
+    public ArrayList<OrderDTO> getAllOrders();
 }
 

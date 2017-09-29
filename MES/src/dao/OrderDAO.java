@@ -1,5 +1,6 @@
 package dao;
 
+import connector.ERPConnector;
 import dto.OrderDTO;
 
 import java.io.File;
@@ -13,6 +14,11 @@ import java.util.Properties;
 import connector.IERPConnector;
 
 public class OrderDAO implements IOrderDAO{
+    IERPConnector connection;
+    public OrderDAO(){
+        connection = new ERPConnector();
+    }
+
     private String getStatement(String text){
         Properties props = new Properties();
         try {
@@ -27,35 +33,54 @@ public class OrderDAO implements IOrderDAO{
     }
 
     @Override
-    public OrderDTO getOrder(String productionID, IERPConnector connection) {
-
+    public OrderDTO getOrder(String productionID) {
         String query = MessageFormat.format(getStatement("table"), productionID);
         ResultSet res;
         try {
+            connection.connectToDatabase();
             res =connection.doQuery(query);
+            connection.closeConnection();
             return new OrderDTO(res.getString(0),res.getInt(1),res.getInt(6),res.getDate(8));
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         return null;
     }
 
+    /**
+     * NOT IMPLEMENTED
+     * @param order
+     */
     @Override
-    public void updateOrder(OrderDTO order, IERPConnector connection) {
+    public void updateOrder(OrderDTO order) {
 
     }
 
     @Override
-    public ArrayList<OrderDTO> getAllOrders(IERPConnector connection) {
+    public ArrayList<OrderDTO> getAllOrders() {
         ArrayList<OrderDTO> r = new ArrayList<OrderDTO>();
         String query = getStatement("table");
         ResultSet res;
         try {
+            connection.connectToDatabase();
             res=connection.doQuery(query);
+            connection.closeConnection();
             while(res.next()){
                 r.add(new OrderDTO(res.getString(0),res.getInt(1),res.getInt(6),res.getDate(8)));
             }
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         return r;
