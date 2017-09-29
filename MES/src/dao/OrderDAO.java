@@ -46,7 +46,7 @@ public class OrderDAO implements IOrderDAO{
     }
 
     @Override
-    public ArrayList<OrderDTO> getAllOrders(IConnector connection) {
+    public ArrayList<OrderDTO> getAllOrders(IERPConnector connection) {
         ArrayList<OrderDTO> r = new ArrayList<OrderDTO>();
         String query = getStatement("table");
         ResultSet res;
