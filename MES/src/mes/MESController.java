@@ -5,16 +5,33 @@
  */
 package mes;
 
+import connector.IERPConnector;
 import dao.OrderDAO;
 import java.util.ArrayList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
  * @author alsle
  */
 public class MESController {
+    OrderDAO orderDAO = new OrderDAO();
 
     public MESController() {
+        
+    }
+    
+    public void getERPOrderList(){
+         orderDAO.getAllOrders(connection)
+        ObservableList<> ERPOrderList = FXCollections.observableArrayList();
+    }
+    
+    public void getInProgressOrderList(){
+        
+    }
+    
+    public void getDoneOrderList(){
         
     }
     
