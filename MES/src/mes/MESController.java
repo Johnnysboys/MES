@@ -6,8 +6,8 @@
 package mes;
 
 import dao.OrderDAO;
-
 import dto.OrderDTO;
+import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -22,9 +22,12 @@ public class MESController {
         
     }
     
-    public void getERPOrderList(){
-         orderDAO.getAllOrders();
-        ObservableList<OrderDTO> ERPOrderList = FXCollections.observableArrayList();
+    public ObservableList getERPOrderList(){
+        
+        ArrayList ERPArrayList = orderDAO.getAllOrders();
+        ObservableList<OrderDTO> ERPOrderList = FXCollections.observableArrayList(ERPArrayList);
+        
+        return ERPOrderList;
     }
     
     public void getInProgressOrderList(){
