@@ -1,6 +1,6 @@
 package dao;
 
-import connector.ERPConnector;
+import dbConnector.ERPConnector;
 import dto.OrderDTO;
 
 import java.io.File;
@@ -10,8 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
-import connector.IERPConnector;
+import dbConnector.IERPConnector;
 
 public class OrderDAO implements IOrderDAO{
     IERPConnector connection;
@@ -43,12 +44,6 @@ public class OrderDAO implements IOrderDAO{
             return new OrderDTO(res.getString(0),res.getInt(1),res.getInt(6),res.getDate(8));
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
         return null;
     }
@@ -63,7 +58,7 @@ public class OrderDAO implements IOrderDAO{
     }
 
     @Override
-    public ArrayList<OrderDTO> getAllOrders() {
+    public List<OrderDTO> getAllOrders() {
         ArrayList<OrderDTO> r = new ArrayList<OrderDTO>();
         String query = getStatement("table");
         ResultSet res;
@@ -75,12 +70,6 @@ public class OrderDAO implements IOrderDAO{
                 r.add(new OrderDTO(res.getString(0),res.getInt(1),res.getInt(6),res.getDate(8)));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         return r;

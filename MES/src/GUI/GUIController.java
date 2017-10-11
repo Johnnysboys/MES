@@ -36,7 +36,7 @@ public class GUIController implements Initializable {
     }
     
     private void handleNewOrderPane(){
-        MESController.getERPOrderList(connection);
+        MESController.getERPOrderList();
         
         
     }
