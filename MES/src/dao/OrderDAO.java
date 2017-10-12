@@ -9,14 +9,22 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
+
 import dbConnector.IERPConnector;
 
 public class OrderDAO implements IOrderDAO{
-    IERPConnector connection;
-    public OrderDAO(){
+    private IERPConnector connection;
+    private static OrderDAO instance;
+    private Map<String,OrderDTO> orders;
+
+    public static synchronized OrderDAO get(){
+        if(instance==null)
+            instance=new OrderDAO();
+        return instance;
+    }
+
+    private OrderDAO(){
         connection = new ERPConnector();
     }
 
@@ -34,18 +42,23 @@ public class OrderDAO implements IOrderDAO{
     }
 
     @Override
-    public OrderDTO getOrder(String productionID) {
-        String query = MessageFormat.format(getStatement("table"), productionID);
+    public OrderDTO getOrder(String orderID) {
+        if(orders.containsKey(orderID))
+            return orders.get(orderID);
+
+        String query = MessageFormat.format(getStatement("table"), orderID);
+        OrderDTO ret=null;
         ResultSet res;
         try {
             connection.connectToDatabase();
             res =connection.doQuery(query);
             connection.closeConnection();
-            return new OrderDTO(res.getString(0),res.getInt(1),res.getInt(6),res.getDate(8));
+            ret= new OrderDTO(res.getString(0),res.getInt(1),res.getInt(6),res.getDate(8));
+            orders.put(ret.getOrderNumber(),ret);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return ret;
     }
 
     /**
@@ -59,19 +72,21 @@ public class OrderDAO implements IOrderDAO{
 
     @Override
     public List<OrderDTO> getAllOrders() {
-        ArrayList<OrderDTO> r = new ArrayList<OrderDTO>();
-        String query = getStatement("table");
+        if(orders==null)
+            orders=new HashMap<String, OrderDTO>();
+        String query = getStatement("allOrders");
         ResultSet res;
         try {
             connection.connectToDatabase();
             res=connection.doQuery(query);
             connection.closeConnection();
             while(res.next()){
-                r.add(new OrderDTO(res.getString(0),res.getInt(1),res.getInt(6),res.getDate(8)));
+                if(!orders.containsKey(res.getString(0)))
+                    orders.put(res.getString(0),new OrderDTO(res.getString(0),res.getInt(1),res.getInt(6),res.getDate(8)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return r;
+        return new ArrayList<>(orders.values());
     }
 }

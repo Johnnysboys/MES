@@ -16,15 +16,13 @@ import javafx.collections.ObservableList;
  * @author alsle
  */
 public class MESController {
-    OrderDAO orderDAO = new OrderDAO();
 
     public MESController() {
         
     }
     
     public ObservableList getERPOrderList(){
-        
-        ArrayList ERPArrayList = orderDAO.getAllOrders();
+        ArrayList ERPArrayList = (ArrayList) OrderDAO.get().getAllOrders();
         ObservableList<OrderDTO> ERPOrderList = FXCollections.observableArrayList(ERPArrayList);
         
         return ERPOrderList;
