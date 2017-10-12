@@ -18,6 +18,10 @@ public class OrderDTO {
     private Date orderedFor;
     private Date toBeDeliveredOn;
     private OrderStatus status;
+    private Date datePlanted;
+    private Date dateHarvested;
+    private int amountDiscarded=0;
+    private int toBePlanted;
    
 
 
@@ -72,5 +76,37 @@ public OrderDTO(String orderNumber, int articleNumber, int quantity, Date ordere
 
     public void setStatus(OrderStatus status) {
         this.status = status;
+    }
+
+    public Date getDatePlanted() {
+        return datePlanted;
+    }
+
+    public void setDatePlanted(Date datePlanted) {
+        this.datePlanted = datePlanted;
+    }
+
+    public Date getDateHarvested() {
+        return dateHarvested;
+    }
+
+    public void setDateHarvested(Date dateHarvested) {
+        this.dateHarvested = dateHarvested;
+    }
+
+    public int getAmountDiscarded() {
+        return amountDiscarded;
+    }
+
+    public void setAmountDiscarded(int amountDiscarded) {
+        this.amountDiscarded = amountDiscarded;
+    }
+
+    public int getToBePlanted() {
+        return toBePlanted;
+    }
+
+    public void setToBePlanted(int toBePlanted) {
+        this.toBePlanted = toBePlanted;
     }
 }
