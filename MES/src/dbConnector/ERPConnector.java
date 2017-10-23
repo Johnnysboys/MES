@@ -27,11 +27,12 @@ public class ERPConnector implements IERPConnector {
 
         try {
             conn = DriverManager.getConnection(Constant.connURL);
+            stm	= conn.createStatement();
         } catch (Exception e) {
             System.out.println("Error getting connection");
             System.out.println(e.getMessage());
         }
-        //stm		= conn.createStatement();
+
     }
 
     public ResultSet doQuery(String cmd) throws SQLException
