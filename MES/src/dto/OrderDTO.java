@@ -21,14 +21,15 @@ public class OrderDTO {
     private Date datePlanted;
     private Date dateHarvested;
     private int amountDiscarded=0;
-    private int toBePlanted;
+    private int amountPlanted=0;
+    private int amountHarvested=0;
    
 
 
 public OrderDTO(String orderNumber, int articleNumber, int quantity, Date orderedFor){
     this.orderNumber = orderNumber;
     this.articleNumber = articleNumber;
-    this.quantity = quantity;
+    this.quantity = quantity+(quantity/5);
     this.orderedFor = orderedFor;
     this.toBeDeliveredOn = this.orderedFor;
     this.status = OrderStatus.UNSCHEDULED;
@@ -98,15 +99,23 @@ public OrderDTO(String orderNumber, int articleNumber, int quantity, Date ordere
         return amountDiscarded;
     }
 
-    public void setAmountDiscarded(int amountDiscarded) {
+    public void addDiscarded(int amountDiscarded) {
         this.amountDiscarded = amountDiscarded;
     }
 
-    public int getToBePlanted() {
-        return toBePlanted;
+    public int getAmountPlanted() {
+        return amountPlanted;
     }
 
-    public void setToBePlanted(int toBePlanted) {
-        this.toBePlanted = toBePlanted;
+    public void addPlanted(int amountPlanted) {
+        this.amountPlanted = amountPlanted;
+    }
+
+    public int getAmountHarvested() {
+        return amountHarvested;
+    }
+
+    public void addHarvested(int amountHarvested) {
+        this.amountHarvested = amountHarvested;
     }
 }

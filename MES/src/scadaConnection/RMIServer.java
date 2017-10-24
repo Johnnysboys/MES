@@ -28,31 +28,25 @@ public class RMIServer extends AbstractMES{
 
     @Override
     public void alertPlanted(OrderINFO orderINFO) throws RemoteException {
-        OrderDAO.get().getOrder(orderINFO.getOrderID()).setStatus(OrderStatus.IN_PRODUCTION);
+        OrderDAO.get().getOrder(orderINFO.getOrderID()).addPlanted(1);
     }
 
     /**
-     * NOT IMPLEMENTED
      * @param orderINFO
      * @throws RemoteException
      */
     @Override
     public void alertDiscarded(OrderINFO orderINFO) throws RemoteException {
-        /**
-         * @TODO implement
-         */
+        OrderDAO.get().getOrder(orderINFO.getOrderID()).addDiscarded(1);
     }
 
     /**
-     * NOT IMPLEMENTED
      * @param orderINFO
      * @throws RemoteException
      */
     @Override
     public void alertHarvest(OrderINFO orderINFO) throws RemoteException {
-        /**
-         * @TODO implement
-         */
+        OrderDAO.get().getOrder(orderINFO.getOrderID()).addHarvested(1);
     }
 
     public void executeOrder(OrderDTO orderDTO) throws ExceedsCapacityException {
