@@ -39,7 +39,6 @@ public class RMIServer extends AbstractMES{
     public void alertDiscarded(OrderINFO orderINFO) throws RemoteException {
         OrderDAO.get().getOrder(orderINFO.getOrderID()).addDiscarded(1);
     }
-
     /**
      * @param orderINFO
      * @throws RemoteException
