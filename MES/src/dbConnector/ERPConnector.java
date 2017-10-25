@@ -10,11 +10,6 @@ public class ERPConnector implements IERPConnector {
 
     public void connectToDatabase()
     {
-        //Properties props = new Properties();
-        //props.put("username",Constant.user);
-        //props.put("password",Constant.password);
-        //props.put("databaseName",Constant.dbname);
-
         // call the driver class' no argument constructor
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");

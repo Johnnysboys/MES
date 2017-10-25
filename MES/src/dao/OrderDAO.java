@@ -14,7 +14,7 @@ import java.util.*;
 
 import dbConnector.IERPConnector;
 
-public class OrderDAO implements IOrderDAO{
+public class OrderDAO {
     private IERPConnector connection;
     private static OrderDAO instance;
     private Map<String,OrderDTO> orders;
@@ -42,7 +42,6 @@ public class OrderDAO implements IOrderDAO{
         }
     }
 
-    @Override
     public OrderDTO getOrder(String orderID) {
         if(orders.containsKey(orderID))
             return orders.get(orderID);
@@ -66,14 +65,12 @@ public class OrderDAO implements IOrderDAO{
      * NOT IMPLEMENTED
      * @param order
      */
-    @Override
     public void updateOrder(OrderDTO order) {
         /**
          * @TODO implement SQL call.
          */
     }
 
-    @Override
     public List<OrderDTO> getAllOrders() {
         if(orders==null)
             orders=new HashMap<String, OrderDTO>();
