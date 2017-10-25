@@ -29,13 +29,26 @@ public class MESController {
         return ERPOrderList;
     }
     
-    public ObservableList getERPArtivleNumbers(){
+    public ObservableList getERPArtivleNumber(){
         ArrayList ERPArrayList = (ArrayList) OrderDAO.get().getAllArticleNumber();
         ObservableList<OrderDTO> ERPArticleNumbersList = FXCollections.observableArrayList(ERPArrayList);
         
         return ERPArticleNumbersList;
         
         }
+    public ObservableList getERPOrderNumber(){
+        ArrayList ERPArrayList = (ArrayList) OrderDAO.get().getAllOrderNumnber();
+        ObservableList<OrderDTO> ERPOrderNumnerList = FXCollections.observableArrayList(ERPArrayList);
+        
+        return ERPOrderNumnerList;
+    }
+    
+    public ObservableList getERPQuantity(){
+        ArrayList ERPArrayList = (ArrayList) OrderDAO.get().getAllQuantity();
+        ObservableList<OrderDTO> ERPQuantityList = FXCollections.observableArrayList(ERPArrayList);
+        
+        return ERPQuantityList;
+    }
     
     
     public void getInProgressOrderList(){

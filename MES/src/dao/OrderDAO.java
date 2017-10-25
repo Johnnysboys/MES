@@ -1,5 +1,6 @@
 package dao;
 
+import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
 import dbConnector.ERPConnector;
 import dto.OrderDTO;
 
@@ -94,7 +95,43 @@ public class OrderDAO implements IOrderDAO{
     
     public ArrayList getAllArticleNumber(){
         ArrayList list = new ArrayList();
-        String query = getStatement("allArticleNumbers");
+        String query = getStatement("allArticleNumbers"); //type
+        ResultSet res;
+        try {
+            connection.connectToDatabase();
+            res=connection.doQuery(query);
+            connection.closeConnection();
+            while(res.next()){
+                list.add(res);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+        
+    }
+    
+      public ArrayList getAllOrderNumnber(){
+        ArrayList list = new ArrayList();
+        String query = getStatement("allOrderNumber"); //orders
+        ResultSet res;
+        try {
+            connection.connectToDatabase();
+            res=connection.doQuery(query);
+            connection.closeConnection();
+            while(res.next()){
+                list.add(res);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+        
+    }
+      
+        public ArrayList getAllQuantity(){
+        ArrayList list = new ArrayList();
+        String query = getStatement("allQuantity");
         ResultSet res;
         try {
             connection.connectToDatabase();

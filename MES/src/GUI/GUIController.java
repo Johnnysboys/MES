@@ -52,7 +52,8 @@ public class GUIController implements Initializable {
         
         OrderTable.getColumns().addAll(articleNumber, quantity, orderID);
         
-        OrderTable.setItems(mc.getERPArtivleNumbers());
+        OrderTable.setItems(mc.getERPArtivleNumber());
+        
   
     }
     
