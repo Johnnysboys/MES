@@ -25,8 +25,18 @@ public class MESController {
         ArrayList ERPArrayList = (ArrayList) OrderDAO.get().getAllOrders();
         ObservableList<OrderDTO> ERPOrderList = FXCollections.observableArrayList(ERPArrayList);
         
+        
         return ERPOrderList;
     }
+    
+    public ObservableList getERPArtivleNumbers(){
+        ArrayList ERPArrayList = (ArrayList) OrderDAO.get().getAllArticleNumber();
+        ObservableList<OrderDTO> ERPArticleNumbersList = FXCollections.observableArrayList(ERPArrayList);
+        
+        return ERPArticleNumbersList;
+        
+        }
+    
     
     public void getInProgressOrderList(){
         

@@ -88,4 +88,23 @@ public class OrderDAO {
         }
         return new ArrayList<>(orders.values());
     }
+    
+    public ArrayList getAllArticleNumber(){
+        ArrayList list = new ArrayList();
+        String query = getStatement("allArticleNumbers");
+        ResultSet res;
+        try {
+            connection.connectToDatabase();
+            res=connection.doQuery(query);
+            connection.closeConnection();
+            while(res.next()){
+                list.add(res);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+        
+    }
+    
 }
