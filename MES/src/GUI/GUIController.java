@@ -41,16 +41,19 @@ public class GUIController implements Initializable {
      
     }
     
-    private void setOrderTable(ActionEvent event, MESController mc){
-        TableColumn articleNumber = new TableColumn("Article Number");
-        TableColumn quantity = new TableColumn("Quantity");
-        TableColumn orderID = new TableColumn("OrderID");
+    private void setOrderTable(MESController mc){
+        TableColumn articleNumberCol = new TableColumn("Article Number");
+        TableColumn quantityCol = new TableColumn("Quantity");
+        TableColumn orderIDCol = new TableColumn("OrderID");
         
-        articleNumber.setCellValueFactory(new PropertyValueFactory<>("Article Number"));
-        quantity.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
-        orderID.setCellValueFactory(new PropertyValueFactory<>("OrderID"));
+        articleNumberCol.setCellValueFactory(new PropertyValueFactory<>("Article Number"));
+        articleNumberCol.setMinWidth(200);
+        quantityCol.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
+        quantityCol.setMinWidth(200);
+        orderIDCol.setCellValueFactory(new PropertyValueFactory<>("OrderID"));
+        orderIDCol.setMinWidth(200);
         
-        OrderTable.getColumns().addAll(articleNumber, quantity, orderID);
+        OrderTable.getColumns().addAll(articleNumberCol, quantityCol, orderIDCol);
         
         OrderTable.setItems(mc.getERPArtivleNumber());
         
