@@ -12,6 +12,7 @@ import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.server.RemoteServer;
 
 public class RMIServer extends AbstractMES{
 
@@ -48,7 +49,7 @@ public class RMIServer extends AbstractMES{
         OrderDAO.get().getOrder(orderID).addHarvested(1);
     }
 
-    public void executeOrder(OrderDTO orderDTO) throws ExceedsCapacityException {
+    public void executeOrder(OrderDTO orderDTO) throws ExceedsCapacityException, RemoteException {
         super.executeOrder(new OrderINFO(orderDTO.getArticleNumber(),orderDTO.getQuantity(),orderDTO.getOrderNumber()));
     }
 }
