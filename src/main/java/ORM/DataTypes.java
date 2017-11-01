@@ -1,15 +1,16 @@
 package ORM;
 
 public enum DataTypes  {
-    STRING("STRING"),
+    STRING("VARCHAR"),
     INTEGER("INTEGER"),
+    SERIAL("SERIAL"),
     BIGINT("BIGINTEGER"),
     FLOAT("FLOAT"),
     DOUBLE("DOUBLE"),
     DATE("DATE"),
     DATENOW("now()"),
-    TEXT("now()"),
-    ENUM("ENUM");
+    TEXT("TEXT"),
+    ENUM("VARCHAR");
 
 
     private final String dataType;
