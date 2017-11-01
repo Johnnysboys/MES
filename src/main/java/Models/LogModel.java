@@ -1,70 +1,40 @@
 package Models;
 
-import ORM.Definition;
-import ORM.Exceptions.NotEnumTypeException;
-import ORM.IModel;
-import ORM.DataTypes;
-import ORM.ConstraintTypes;
+import ORM.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-public class LogModel implements IModel {
-    // Definition for the table logs
-    private String tableName = "Logs";
-    private ArrayList<Definition> definitions = new ArrayList();
-
-    public LogModel(){
-        this.define();
+public class LogModel extends Model {
+    public LogModel() {
+        // Define the table name
+        super("Logs");
     }
 
     public void define() {
-        // id column definition
-        Definition idDif = new Definition("id", DataTypes.INTEGER);
-        idDif.setContraints(new HashMap<ConstraintTypes, String>() {{
-            put(ConstraintTypes.AUTOINCREMENT, "true");
-            put(ConstraintTypes.FOREIGNKEY, "true");
-        }});
-        definitions.add(idDif);
-
-        // CreatedAt column definition
-        Definition createdAtDif = new Definition("createdAt", DataTypes.DATE);
-        createdAtDif.setDefaultValue(DataTypes.DATENOW);
-        createdAtDif.setContraints(new HashMap<ConstraintTypes, String>() {{
-            put(ConstraintTypes.ALLOWNULL, "true");
-        }});
-        definitions.add(createdAtDif);
-
-
-        // logType column definition
         try {
-            Definition logTypeDif = new Definition("logType", DataTypes.ENUM);
-            logTypeDif.setAllowedValues(new String[]{"info", "error", "warning"});
-            logTypeDif.setContraints(new HashMap<ConstraintTypes, String>(){{
-                put(ConstraintTypes.ALLOWNULL, "true");
+            // id column definition
+            Definition idDif = new Definition("id", DataTypes.SERIAL);
+            idDif.setConstraints(new ArrayList<Constraint>() {{
+                add(new Constraint<>(ConstraintTypes.PRIMARYKEY));
             }});
+
+            // CreatedAt column definition
+            Definition createdAtDif = new Definition("created_at", DataTypes.DATE);
+            createdAtDif.setDefaultValue(DataTypes.DATENOW);
+
+            // logType column definition
+            Definition logTypeDif = new Definition("log_type", DataTypes.ENUM);
+            logTypeDif.setAllowedValues("info", "error", "warning");
             logTypeDif.setDefaultValue("info");
-            definitions.add(logTypeDif);
-        } catch (NotEnumTypeException e) {
+
+            // text column definition
+            Definition textDif = new Definition("text", DataTypes.TEXT);
+
+            // Lastly add all definitions to an the array list
+            this.setDefinitions(idDif, textDif, logTypeDif, createdAtDif);
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
-        // text column definition
-        Definition textDif = new Definition("text", DataTypes.TEXT);
-        textDif.setContraints(new HashMap<ConstraintTypes, String>(){{
-            put(ConstraintTypes.ALLOWNULL, "false");
-        }});
-
-        definitions.add(textDif);
-
-
-    }
-
-    public String getTableName() {
-        return tableName;
-    }
-
-    public ArrayList<Definition> getDefinitions() {
-        return definitions;
     }
 }
