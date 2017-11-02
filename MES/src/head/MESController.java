@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mes;
+package head;
 
-import dao.OrderDAO;
-import dto.OrderDTO;
+import dao_mes.OrderDAO;
+import dto_mes.OrderDTO;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,7 +29,7 @@ public class MESController {
         return ERPOrderList;
     }
     
-    public ObservableList getERPArtivleNumber(){
+    public ObservableList getERPArticleNumber(){
         ArrayList ERPArrayList = (ArrayList) OrderDAO.get().getAllArticleNumber();
         ObservableList<OrderDTO> ERPArticleNumbersList = FXCollections.observableArrayList(ERPArrayList);
         

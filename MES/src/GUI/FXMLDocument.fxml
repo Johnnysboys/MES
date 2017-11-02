@@ -17,9 +17,9 @@
                      <children>
                         <TableView fx:id="OrderTable" layoutX="82.0" layoutY="79.0" prefHeight="557.0" prefWidth="928.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
-                            <TableColumn fx:id="OrderPane" prefWidth="111.0" text="C1" />
-                            <TableColumn fx:id="OrdersInProgressPane" prefWidth="103.0" text="C2" />
-                              <TableColumn fx:id="OrderDonePane" prefWidth="98.0" text="C3" />
+                            <TableColumn fx:id="OrderPane" prefWidth="111.0" />
+                            <TableColumn fx:id="OrdersInProgressPane" prefWidth="103.0" />
+                              <TableColumn fx:id="OrderDonePane" prefWidth="98.0" />
                           </columns>
                         </TableView>
                      </children>

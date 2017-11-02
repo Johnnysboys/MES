@@ -5,7 +5,7 @@
  */
 package GUI;
 
-import dto.OrderDTO;
+import dto_mes.OrderDTO;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -18,7 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import mes.MESController;
+import head.MESController;
 
 /**
  *
@@ -57,7 +57,8 @@ public class GUIController implements Initializable {
         
         OrderTable.getColumns().addAll(articleNumberCol, quantityCol, orderIDCol);
         
-        OrderTable.setItems(mc.getERPArtivleNumber());
+        OrderTable.setItems(mc.getERPArticleNumber());
+        
         
   
     }
