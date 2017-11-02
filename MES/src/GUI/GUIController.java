@@ -12,6 +12,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -62,7 +64,14 @@ public class GUIController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-    }    
+    }
+
+    public void showAlert(AlertType alertType, String titleText, String headerText, String contentText){
+        Alert alert = new Alert(alertType);
+        alert.setTitle(titleText);
+        alert.setHeaderText(headerText);
+        alert.setContentText(contentText);
+    }
 
    
     
