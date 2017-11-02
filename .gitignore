@@ -4,5 +4,6 @@
 /MES/manifest.mf
 .idea
 /.idea
-.out
 /out
+/target
+MES.iml
