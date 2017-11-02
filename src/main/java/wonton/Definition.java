@@ -12,7 +12,7 @@ public class Definition {
     private DataTypes type;
     private String defaultValue;
     private List allowedValues;
-    private ArrayList<Constraint> contraints;
+    private ArrayList<Constraint> constraints;
 
     public Definition(String fieldName, DataTypes type) {
         this.fieldName = fieldName;
@@ -22,24 +22,25 @@ public class Definition {
     public String getFieldName() {
         return fieldName;
     }
-    public DataTypes getType() {
+    DataTypes getType() {
         return type;
     }
-    public ArrayList<Constraint> getConstraints() {
-        return contraints;
+    ArrayList<Constraint> getConstraints() {
+        return constraints;
     }
-    public String getDefaultValue() {
+    String getDefaultValue() {
         return defaultValue;
     }
-    public boolean hasAllowedValues() {
+    boolean hasAllowedValues() {
         return allowedValues != null;
     }
 
-    public void setConstraints(ArrayList<Constraint> contraints) {
-        this.contraints = contraints;
+    public void setConstraints(ArrayList<Constraint> constraints) {
+        this.constraints = constraints;
     }
-    public void setConstraints(Constraint... contraints) {
-        this.contraints = (ArrayList<Constraint>) Arrays.asList(contraints);
+    public void setConstraints(Constraint... constraints) {
+        this.constraints = new ArrayList<>();
+        this.constraints.addAll(Arrays.asList(constraints));
     }
     public void setDefaultValue(DataTypes defaultValue) {
         this.defaultValue = defaultValue.toString();
@@ -47,7 +48,7 @@ public class Definition {
     public void setDefaultValue(String defaultValue) {
         this.defaultValue = defaultValue;
     }
-    public <T> boolean isAllowedValue(T value){
+    <T> boolean isAllowedValue(T value){
         return this.allowedValues.contains(value);
     }
     public <T> void setAllowedValues(T... allowedValues) {
