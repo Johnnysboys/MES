@@ -3,7 +3,6 @@ package scadaConnection;
 import dao.OrderDAO;
 import dto.OrderDTO;
 import dto.OrderINFO;
-import dto.OrderStatus;
 import mes.AbstractMES;
 import mes.ExceedsCapacityException;
 import mes.IMESServer;
@@ -12,7 +11,6 @@ import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.rmi.server.RemoteServer;
 
 public class RMIServer extends AbstractMES{
 
