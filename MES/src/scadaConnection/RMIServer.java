@@ -3,6 +3,7 @@ package scadaConnection;
 import dao.OrderDAO;
 import dto.OrderDTO;
 import dto.OrderINFO;
+import dto.OrderStatus;
 import mes.AbstractMES;
 import mes.ExceedsCapacityException;
 import mes.IMESServer;
@@ -47,7 +48,13 @@ public class RMIServer extends AbstractMES{
         new Thread(()->OrderDAO.get().getOrder(orderID).addHarvested(1)).start();
     }
 
-    public void executeOrder(OrderDTO orderDTO) throws ExceedsCapacityException, RemoteException {
-        super.executeOrder(new OrderINFO(orderDTO.getArticleNumber(),orderDTO.getQuantity(),orderDTO.getOrderNumber()));
+    public void executeOrder(OrderDTO orderDTO) throws RemoteException {
+        orderDTO.setStatus(OrderStatus.SCHEDULED);
+        try {
+            super.executeOrder(new OrderINFO(orderDTO.getArticleNumber(),orderDTO.getToBePlanted(),orderDTO.getOrderNumber()));
+        } catch (ExceedsCapacityException e) {
+            return;
+        }
+        orderDTO.setStatus(OrderStatus.IN_PRODUCTION);
     }
 }

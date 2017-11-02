@@ -5,6 +5,8 @@
  */
 package dto;
 
+import com.sun.org.apache.xpath.internal.operations.Or;
+
 import java.util.Date;
 
 /**
@@ -20,6 +22,7 @@ public class OrderDTO {
     private OrderStatus status;
     private Date datePlanted;
     private Date dateHarvested;
+    private int toBePlanted;
     private int amountDiscarded=0;
     private int amountPlanted=0;
     private int amountHarvested=0;
@@ -29,7 +32,8 @@ public class OrderDTO {
 public OrderDTO(String orderNumber, int articleNumber, int quantity, Date orderedFor){
     this.orderNumber = orderNumber;
     this.articleNumber = articleNumber;
-    this.quantity = quantity+(quantity/5);
+    this.quantity = quantity;
+    this.toBePlanted=quantity+(quantity/5);
     this.orderedFor = orderedFor;
     this.toBeDeliveredOn = this.orderedFor;
     this.status = OrderStatus.UNSCHEDULED;
@@ -100,7 +104,7 @@ public OrderDTO(String orderNumber, int articleNumber, int quantity, Date ordere
     }
 
     public void addDiscarded(int amountDiscarded) {
-        this.amountDiscarded = amountDiscarded;
+        this.amountDiscarded += amountDiscarded;
     }
 
     public int getAmountPlanted() {
@@ -108,7 +112,7 @@ public OrderDTO(String orderNumber, int articleNumber, int quantity, Date ordere
     }
 
     public void addPlanted(int amountPlanted) {
-        this.amountPlanted = amountPlanted;
+        this.amountPlanted += amountPlanted;
     }
 
     public int getAmountHarvested() {
@@ -116,6 +120,17 @@ public OrderDTO(String orderNumber, int articleNumber, int quantity, Date ordere
     }
 
     public void addHarvested(int amountHarvested) {
-        this.amountHarvested = amountHarvested;
+        if(this.status== OrderStatus.DELIVERED)
+            addDiscarded(amountHarvested);
+        else
+            this.amountHarvested += amountHarvested;
+        if (amountHarvested>=quantity){
+            this.status=OrderStatus.DELIVERED;
+        }
     }
+
+    public int getToBePlanted() {
+        return toBePlanted;
+    }
+
 }
