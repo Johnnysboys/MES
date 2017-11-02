@@ -1,6 +1,7 @@
 package wonton.connections;
 
 import wonton.Data;
+import wonton.Row;
 import wonton.utils.DataConverter;
 import wonton.Model;
 import wonton.interfaces.IConnection;
@@ -27,7 +28,7 @@ public class PGConnection implements IConnection {
     }
 
     @Override
-    public List<Data> queryModel(String query, Model model) {
+    public List<Row> queryModel(String query, Model model) {
         try {
             this.statement = connection.createStatement();
             ResultSet resultSet = this.statement.executeQuery(query);
