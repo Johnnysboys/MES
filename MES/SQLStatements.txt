@@ -1,0 +1,2 @@
+table = SELECT * from prodtable where DATAAREAID = ''Firm 75'' and production = ''{0}''
+allOrders = SELECT * from prodtable where DATAAREAID= ''Firm 75''
