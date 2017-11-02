@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dto;
+package dto_mes;
 
 import com.sun.org.apache.xpath.internal.operations.Or;
 
