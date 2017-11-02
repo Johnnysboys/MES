@@ -10,13 +10,16 @@ public class Data<T> {
     }
 
 
-
     public String getField() {
         return this.field;
     }
-    public T getData() {
-        return data;
-    }
 
+    public T getData() {
+        return this.data;
+    }
+    @Override
+    public String toString(){
+        return "" + this.data;
+    }
 
 }
