@@ -1,9 +1,9 @@
 package scadaConnection;
-import 
+
 import dao_mes.OrderDAO;
 import dto_mes.OrderDTO;
 import dto.OrderINFO;
-import dto.OrderStatus;
+import dto_mes.OrderStatus;
 import mes.AbstractMES;
 import mes.RMI_Constants;
 import mes.ExceedsCapacityException;
