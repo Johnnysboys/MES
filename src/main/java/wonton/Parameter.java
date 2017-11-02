@@ -1,11 +1,13 @@
-package ORM;
+package wonton;
+
+import wonton.types.Operators;
 
 public class Parameter<T> {
     String column;
     Operators operator;
     T data;
 
-    Parameter (String column, Operators operator, T data) {
+    public Parameter(String column, Operators operator, T data) {
         this.column = column;
         this.operator = operator;
         this.data = data;

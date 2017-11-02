@@ -1,6 +1,6 @@
-package ORM;
-import ORM.types.ConstStatements;
-import ORM.types.DataTypes;
+package wonton;
+import wonton.types.ConstStatements;
+import wonton.types.DataTypes;
 
 import java.util.ArrayList;
 import java.util.List;

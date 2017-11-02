@@ -1,4 +1,4 @@
-package ORM.exceptions;
+package wonton.exceptions;
 
 public class NotEnumTypeException extends Exception{
 

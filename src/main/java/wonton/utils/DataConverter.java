@@ -1,4 +1,8 @@
-package wonton;
+package wonton.utils;
+
+import wonton.Data;
+import wonton.Definition;
+import wonton.Model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

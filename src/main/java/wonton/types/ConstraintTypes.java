@@ -1,4 +1,4 @@
-package ORM.types;
+package wonton.types;
 
 public enum ConstraintTypes {
     AUTOINCREMENT("AUTOINCREMENT"),

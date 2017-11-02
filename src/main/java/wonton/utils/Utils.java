@@ -1,4 +1,4 @@
-package wonton;
+package wonton.utils;
 
 public class Utils {
     public static String checkCamelCase(String text) {

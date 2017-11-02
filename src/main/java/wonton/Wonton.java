@@ -1,7 +1,8 @@
-package ORM;
+package wonton;
 
 
-import ORM.interfaces.IConnection;
+import wonton.interfaces.IConnection;
+import wonton.service.Service;
 
 public class Wonton {
     private IConnection connection;

@@ -1,6 +1,4 @@
-package ORM;
-
-import java.util.Arrays;
+package wonton;
 
 public class Data<T> {
     private T data;

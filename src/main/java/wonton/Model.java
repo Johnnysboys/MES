@@ -1,8 +1,8 @@
-package ORM;
+package wonton;
 
-import ORM.exceptions.DoesNotExistsInModelException;
-import ORM.exceptions.IsNotAnAllowedValueException;
-import ORM.interfaces.IModel;
+import wonton.exceptions.DoesNotExistsInModelException;
+import wonton.exceptions.IsNotAnAllowedValueException;
+import wonton.interfaces.IModel;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;

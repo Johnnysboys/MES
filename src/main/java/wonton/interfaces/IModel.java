@@ -1,6 +1,6 @@
-package ORM.interfaces;
+package wonton.interfaces;
 
-import ORM.Definition;
+import wonton.Definition;
 
 import java.util.ArrayList;
 

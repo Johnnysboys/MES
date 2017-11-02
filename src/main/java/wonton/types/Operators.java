@@ -1,4 +1,4 @@
-package ORM;
+package wonton.types;
 
 public enum Operators {
     GT("<"),

@@ -1,7 +1,7 @@
-package ORM.interfaces;
+package wonton.interfaces;
 
-import ORM.Data;
-import ORM.exceptions.DoesNotExistsInModelException;
+import wonton.Data;
+import wonton.exceptions.DoesNotExistsInModelException;
 
 import java.util.List;
 

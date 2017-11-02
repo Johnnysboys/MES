@@ -1,7 +1,7 @@
-package ORM.interfaces;
+package wonton.interfaces;
 
-import ORM.Data;
-import ORM.Model;
+import wonton.Data;
+import wonton.Model;
 
 import java.sql.ResultSet;
 import java.util.List;

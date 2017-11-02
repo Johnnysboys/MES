@@ -1,6 +1,8 @@
 package Models;
 
-import ORM.*;
+import wonton.*;
+import wonton.types.ConstraintTypes;
+import wonton.types.DataTypes;
 
 import java.util.ArrayList;
 
