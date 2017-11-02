@@ -10,7 +10,8 @@ public enum DataTypes  {
     DATE("DATE"),
     DATENOW("now()"),
     TEXT("TEXT"),
-    ENUM("VARCHAR");
+    ENUM("VARCHAR"),
+    REAL("REAL");
 
 
     private final String dataType;
