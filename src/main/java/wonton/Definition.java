@@ -2,6 +2,7 @@ package wonton;
 
 import wonton.types.DataTypes;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,6 +37,9 @@ public class Definition {
 
     public void setConstraints(ArrayList<Constraint> contraints) {
         this.contraints = contraints;
+    }
+    public void setConstraints(Constraint... contraints) {
+        this.contraints = (ArrayList<Constraint>) Arrays.asList(contraints);
     }
     public void setDefaultValue(DataTypes defaultValue) {
         this.defaultValue = defaultValue.toString();
