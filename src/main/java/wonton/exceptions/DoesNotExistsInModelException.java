@@ -1,4 +1,4 @@
-package ORM.Exceptions;
+package ORM.exceptions;
 
 public class DoesNotExistsInModelException extends Exception {
     public DoesNotExistsInModelException(){

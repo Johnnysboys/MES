@@ -1,4 +1,4 @@
-package ORM;
+package ORM.types;
 
 public enum ConstraintTypes {
     AUTOINCREMENT("AUTOINCREMENT"),

@@ -1,4 +1,9 @@
-package ORM;
+package ORM.connections;
+
+import ORM.Data;
+import ORM.DataConverter;
+import ORM.Model;
+import ORM.interfaces.IConnection;
 
 import java.sql.*;
 import java.util.List;
@@ -48,7 +53,7 @@ public class PGConnection implements IConnection {
     }
 
     @Override
-    public ResultSet insertData(String query, List<Data> _data) {
+    public ResultSet queryData(String query, List<Data> _data) {
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             for (Data data : _data) {

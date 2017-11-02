@@ -1,9 +1,10 @@
-package ORM;
+package ORM.interfaces;
+
+import ORM.Definition;
 
 import java.util.ArrayList;
 
 public interface IModel {
-    void define();
     String getTableName();
     ArrayList<Definition> getDefinitions();
 }

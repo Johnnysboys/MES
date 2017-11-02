@@ -1,15 +1,15 @@
 package ORM;
 
-import ORM.Exceptions.DoesNotExistsInModelException;
-import ORM.Exceptions.IsNotAnAllowedValueException;
+import ORM.exceptions.DoesNotExistsInModelException;
+import ORM.exceptions.IsNotAnAllowedValueException;
+import ORM.interfaces.IModel;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class Model implements IModel  {
+public abstract class Model implements IModel {
     private ArrayList<Definition> definitions;
     private String tableName;
 

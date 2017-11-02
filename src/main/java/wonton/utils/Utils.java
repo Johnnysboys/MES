@@ -1,4 +1,4 @@
-package ORM;
+package wonton;
 
 public class Utils {
     public static String checkCamelCase(String text) {

@@ -1,6 +1,8 @@
 package ORM;
 
 
+import ORM.interfaces.IConnection;
+
 public class Wonton {
     private IConnection connection;
     public Wonton(IConnection connection){

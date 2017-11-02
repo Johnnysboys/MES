@@ -1,5 +1,7 @@
 package ORM;
 
+import ORM.types.ConstraintTypes;
+
 public class Constraint<T> {
     private ConstraintTypes type;
     private T arg;

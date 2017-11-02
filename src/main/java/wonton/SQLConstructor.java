@@ -1,13 +1,31 @@
 package ORM;
+import ORM.types.ConstStatements;
+import ORM.types.DataTypes;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.String.join;
+
 public class SQLConstructor {
-    public static String insert(List<Data> data, Model model) throws Exception {
-        return insert(data, model, true);
+    public static String update(Model model, List<Data> data, int id){
+        StringBuilder query = new StringBuilder();
+        query.append(join(" ", ConstStatements.UPDATE.toString(), model.getTableName()));
+        String[] setStatements = new String[data.size()];
+        for(int i = 0; i < data.size(); i++){
+            Data d = data.get(i);
+            setStatements[i] = join(" ", d.getField(), "=", "?");
+        }
+        query.append(" SET " + join(", ", setStatements));
+        query.append(" WHERE id = " + id + ";");
+        return query.toString();
     }
 
-    public static String insert(List<Data> data, Model model, Boolean returnId) throws Exception {
+    public static String insert(Model model, List<Data> data) throws Exception {
+        return insert(model, data, true);
+    }
+
+    public static String insert(Model model, List<Data> data, Boolean returnId) throws Exception {
         StringBuilder query = new StringBuilder();
         int numOfData = data.size();
         String[] fields = new String[numOfData];
@@ -16,10 +34,10 @@ public class SQLConstructor {
             fields[i] = data.get(i).getField();
             placeholders[i] = "?";
         }
-        String fieldsString = String.join(", ", fields);
-        String dataString = String.join(", ", placeholders);
-        query.append(String.join(" ",ConstStatements.INSERT.toString(), "INTO", model.getTableName()));
-        query.append(String.join(" ", "(", fieldsString, ") VALUES (", dataString, ")"));
+        String fieldsString = join(", ", fields);
+        String dataString = join(", ", placeholders);
+        query.append(join(" ",ConstStatements.INSERT.toString(), "INTO", model.getTableName()));
+        query.append(join(" ", "(", fieldsString, ") VALUES (", dataString, ")"));
 
         if(returnId){
             query.append("RETURNING id");
@@ -31,7 +49,7 @@ public class SQLConstructor {
 
     public static String createTable(Model model) {
         StringBuilder query = new StringBuilder();
-        query.append(String.join(" ",
+        query.append(join(" ",
                 ConstStatements.CREATE.toString(),
                 ConstStatements.TABLE.toString(),
                 ConstStatements.IFNOT.toString(),
@@ -42,7 +60,7 @@ public class SQLConstructor {
     private static String constructTableFromModel(Model model){
         StringBuilder sql = new StringBuilder();
         String[] fields = constructFields(model.getDefinitions(), model);
-        sql.append(model.getTableName() + " (" + String.join(",",fields) + ")");
+        sql.append(model.getTableName() + " (" + join(",",fields) + ")");
         return sql.toString();
     }
     private static String[] constructFields(ArrayList<Definition> definitions, Model model){
@@ -74,21 +92,39 @@ public class SQLConstructor {
     }
 
     public static String select(Model model){
-        return select(model, "*");
+        return select(model, new String[]{}, "*");
     }
 
-    public static String select(Model model, String... attributes){
+    private static String select(Model model, String[] parameterString, String... attributes){
         StringBuilder query = new StringBuilder();
-        query.append(String.join(" ",
+        query.append(join(" ",
                 ConstStatements.SELECT.toString(),
-                String.join(",", attributes),
+                join(",", attributes),
                 "FROM",
-                model.getTableName(),
-                ";"));
-                return query.toString();
+                model.getTableName()));
+        if(parameterString != null && parameterString.length > 0){
+            query.append(" WHERE " + join(" AND ", parameterString));
+        }
+        query.append(";");
+        return query.toString();
     }
-    public static String
+    public static String select(Model model, List<Parameter> parameters){
+        String[] parameterString = new String[parameters.size()];
+        for(int i = 0; i < parameters.size(); i++){
+            parameterString[i] = parameters.get(i).toString();
+        }
+        return select(model, parameterString, "*");
+    }
+    public static String select(Model model, String... attributes){
+        return select(model, null, attributes);
+    }
 
+
+    public static String delete(Model model, int id){
+        StringBuilder query = new StringBuilder();
+        query.append(join(" ", ConstStatements.DELETE.toString(), "FROM", model.getTableName(), "WHERE id = " + id + ";"));
+        return query.toString();
+    }
 
 
 }

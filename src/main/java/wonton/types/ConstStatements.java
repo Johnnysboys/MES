@@ -1,8 +1,9 @@
-package ORM;
+package ORM.types;
 
 public enum ConstStatements {
     CREATE("CREATE"),
     TABLE("TABLE"),
+    UPDATE("UPDATE"),
     IFNOT("IF NOT EXISTS"),
     WHERE("WHERE"),
     INSERT("INSERT"),
