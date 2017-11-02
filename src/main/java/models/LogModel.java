@@ -1,4 +1,4 @@
-package Models;
+package models;
 
 import wonton.*;
 import wonton.types.ConstraintTypes;

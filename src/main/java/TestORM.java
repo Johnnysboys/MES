@@ -1,6 +1,6 @@
-import Models.LogModel;
-import Models.newModel;
-import Models.testModel;
+import models.LogModel;
+import models.newModel;
+import models.testModel;
 import wonton.connections.PGConnection;
 import wonton.service.Service;
 import wonton.Wonton;
@@ -19,7 +19,7 @@ public class TestORM {
 //                add(new Data("int", 2));
 //            }});
 //            newService.delete(1);
-            newService.find();
+//            newService.find();
 //            newService.get(4);
 //            newService.update()
 //
