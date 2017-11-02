@@ -13,9 +13,15 @@ import java.text.MessageFormat;
 import java.util.*;
 
 import dbConnector.IERPConnector;
+import models.ordersModel;
+import wonton.Wonton;
+import wonton.connections.PGConnection;
+import wonton.service.Service;
 
 public class OrderDAO {
     private IERPConnector connection;
+    private Wonton wonton;
+    private Service caller;
     private static OrderDAO instance;
     private Map<String,OrderDTO> orders;
 
@@ -26,27 +32,35 @@ public class OrderDAO {
     }
 
     private OrderDAO(){
+        try {
+            wonton = new Wonton(new PGConnection("admin_dhk", "admin_dhk", "code1234", "51.254.143.91"));
+            caller = wonton.createService(new ordersModel());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         connection = new ERPConnector();
     }
 
-    private String getStatement(String text){
-        Properties props = new Properties();
-        try {
-            File file = new File("SQLStatements.txt");
-            FileInputStream in = new FileInputStream(file);
-            props.load(in);
-            String res = props.getProperty(text);
-            return res;
-        } catch (IOException e) {
-            throw new IllegalStateException("Properties failed to load");
-        }
-    }
+//    private String getStatement(String text){
+//        Properties props = new Properties();
+//        try {
+//            File file = new File("SQLStatements.txt");
+//            FileInputStream in = new FileInputStream(file);
+//            props.load(in);
+//            String res = props.getProperty(text);
+//            return res;
+//        } catch (IOException e) {
+//            throw new IllegalStateException("Properties failed to load");
+//        }
+//    }
 
     public OrderDTO getOrder(String orderID) {
         if(orders.containsKey(orderID))
             return orders.get(orderID);
+        caller.find();
 
         String query = MessageFormat.format(getStatement("table"), orderID);
+
         OrderDTO ret=null;
         ResultSet res;
         try {
