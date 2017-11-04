@@ -1,21 +1,16 @@
 package dao_mes;
 
-import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
 import dbConnector.ERPConnector;
 import dto_mes.OrderDTO;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.MessageFormat;
 import java.util.*;
-
 import dbConnector.IERPConnector;
 import models.ordersModel;
+import wonton.Row;
 import wonton.Wonton;
 import wonton.connections.PGConnection;
+import wonton.exceptions.DoesNotExistsInModelException;
 import wonton.service.Service;
 
 public class OrderDAO {
@@ -41,38 +36,11 @@ public class OrderDAO {
         connection = new ERPConnector();
     }
 
-//    private String getStatement(String text){
-//        Properties props = new Properties();
-//        try {
-//            File file = new File("SQLStatements.txt");
-//            FileInputStream in = new FileInputStream(file);
-//            props.load(in);
-//            String res = props.getProperty(text);
-//            return res;
-//        } catch (IOException e) {
-//            throw new IllegalStateException("Properties failed to load");
-//        }
-//    }
-
     public OrderDTO getOrder(String orderID) {
         if(orders.containsKey(orderID))
             return orders.get(orderID);
-        caller.find();
-
-        String query = MessageFormat.format(getStatement("table"), orderID);
-
-        OrderDTO ret=null;
-        ResultSet res;
-        try {
-            connection.connectToDatabase();
-            res =connection.doQuery(query);
-            connection.closeConnection();
-            ret= new OrderDTO(res.getString(0),res.getInt(1),res.getInt(6),res.getDate(8));
-            orders.put(ret.getOrderNumber(),ret);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return ret;
+        getAllOrders();
+        return orders.get(orderID);
     }
 
     /**
@@ -88,74 +56,64 @@ public class OrderDAO {
     public List<OrderDTO> getAllOrders() {
         if(orders==null)
             orders=new HashMap<String, OrderDTO>();
-        String query = getStatement("allOrders");
-        ResultSet res;
-        try {
-            connection.connectToDatabase();
-            res=connection.doQuery(query);
-            connection.closeConnection();
-            while(res.next()){
-                if(!orders.containsKey(res.getString(0)))
-                    orders.put(res.getString(0),new OrderDTO(res.getString(0),res.getInt(1),res.getInt(6),res.getDate(8)));
+
+        List<Row> list=caller.find();
+        for (Row r: list) {
+            if(orders.containsKey(r.get("production").getData()))
+                continue;
+            else {
+                orders.put((String) r.get("production").getData(), new OrderDTO((String) r.get("production").getData(),
+                        (Integer) r.get("itemnumber").getData(),
+                        (Integer) r.get("quantity").getData(),
+                        (Date) r.get("delivery").getData()));
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return new ArrayList<>(orders.values());
     }
     
     public ArrayList getAllArticleNumber(){
-        ArrayList list = new ArrayList();
-        String query = getStatement("allArticleNumbers"); //type
-        ResultSet res;
+        ArrayList<Integer> reslist= new ArrayList<>();
+        List<Row> list;
         try {
-            connection.connectToDatabase();
-            res=connection.doQuery(query);
-            connection.closeConnection();
-            while(res.next()){
-                list.add(res);
+            list =caller.find("itemnumber");
+            for (Row r : list) {
+                reslist.add((Integer) r.get(0).getData());
             }
-        } catch (SQLException e) {
+        } catch (DoesNotExistsInModelException e) {
             e.printStackTrace();
         }
-        return list;
+        return reslist;
         
     }
     
-      public ArrayList getAllOrderNumnber(){
-        ArrayList list = new ArrayList();
-        String query = getStatement("allOrderNumber"); //orders
-        ResultSet res;
-        try {
-            connection.connectToDatabase();
-            res=connection.doQuery(query);
-            connection.closeConnection();
-            while(res.next()){
-                list.add(res);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return list;
+    public ArrayList getAllOrderNumber(){
+      ArrayList<String> reslist= new ArrayList<>();
+      List<Row> list;
+      try {
+          list =caller.find("production");
+          for (Row r : list) {
+              reslist.add((String) r.get(0).getData());
+          }
+      } catch (DoesNotExistsInModelException e) {
+          e.printStackTrace();
+      }
+      return reslist;
         
     }
       
-        public ArrayList getAllQuantity(){
-        ArrayList list = new ArrayList();
-        String query = getStatement("allQuantity");
-        ResultSet res;
+    public ArrayList getAllQuantity(){
+        ArrayList<Integer> reslist= new ArrayList<>();
+        List<Row> list;
         try {
-            connection.connectToDatabase();
-            res=connection.doQuery(query);
-            connection.closeConnection();
-            while(res.next()){
-                list.add(res);
+            list =caller.find("quantity");
+            for (Row r : list) {
+                reslist.add((Integer) r.get(0).getData());
             }
-        } catch (SQLException e) {
+        } catch (DoesNotExistsInModelException e) {
             e.printStackTrace();
         }
-        return list;
-        
+        return reslist;
+
     }
     
 }
