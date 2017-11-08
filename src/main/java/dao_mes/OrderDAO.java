@@ -1,11 +1,12 @@
 package dao_mes;
-
-import dbConnector.ERPConnector;
 import dto_mes.OrderDTO;
-import java.sql.ResultSet;
+
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.*;
-import dbConnector.IERPConnector;
 import models.ordersModel;
 import wonton.Row;
 import wonton.Wonton;
@@ -14,7 +15,7 @@ import wonton.exceptions.DoesNotExistsInModelException;
 import wonton.service.Service;
 
 public class OrderDAO {
-    private IERPConnector connection;
+
     private Wonton wonton;
     private Service caller;
     private static OrderDAO instance;
@@ -33,7 +34,6 @@ public class OrderDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        connection = new ERPConnector();
     }
 
     public OrderDTO getOrder(String orderID) {
@@ -54,19 +54,24 @@ public class OrderDAO {
     }
 
     public List<OrderDTO> getAllOrders() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         if(orders==null)
-            orders=new HashMap<String, OrderDTO>();
+            orders=new HashMap<>();
 
         List<Row> list=caller.find();
-        for (Row r: list) {
-            if(orders.containsKey(r.get("production").getData()))
-                continue;
-            else {
-                orders.put((String) r.get("production").getData(), new OrderDTO((String) r.get("production").getData(),
-                        (Integer) r.get("itemnumber").getData(),
-                        (Integer) r.get("quantity").getData(),
-                        (Date) r.get("delivery").getData()));
+        try {
+            for (Row r : list) {
+                if (orders.containsKey((String) r.get("production").getData()))
+                    continue;
+                else {
+                    orders.put((String) r.get("production").getData(), new OrderDTO((String) r.get("production").getData(),
+                            r.get("itemnumber").getData().toString(),
+                            Integer.valueOf(r.get("quantity").getData().toString().split("\\.")[0]),
+                            formatter.parse(r.get("delivery").toString())));
+                }
             }
+        }catch (ParseException e){
+            e.printStackTrace();
         }
         return new ArrayList<>(orders.values());
     }

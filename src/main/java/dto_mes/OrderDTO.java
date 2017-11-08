@@ -15,7 +15,7 @@ import java.util.Date;
  */
 public class OrderDTO {
     private String orderNumber;
-    private int articleNumber;
+    private String articleNumber;
     private int quantity;
     private Date orderedFor;
     private Date toBeDeliveredOn;
@@ -29,7 +29,7 @@ public class OrderDTO {
    
 
 
-public OrderDTO(String orderNumber, int articleNumber, int quantity, Date orderedFor){
+public OrderDTO(String orderNumber, String articleNumber, int quantity, Date orderedFor){
     this.orderNumber = orderNumber;
     this.articleNumber = articleNumber;
     this.quantity = quantity;
@@ -47,7 +47,7 @@ public OrderDTO(String orderNumber, int articleNumber, int quantity, Date ordere
         return orderNumber;
     }
 
-    public int getArticleNumber() {
+    public String getArticleNumber() {
         return articleNumber;
     }
 
