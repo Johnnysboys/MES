@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI;
+package main.java.GUI;
 
 import dto_mes.OrderDTO;
 import java.net.URL;
@@ -43,7 +43,7 @@ public class GUIController implements Initializable {
      
     }
     
-    private void setOrderTable(MESController mc){
+    private void setOrderTableview(MESController mc){
         TableColumn articleNumberCol = new TableColumn("Article Number");
         TableColumn quantityCol = new TableColumn("Quantity");
         TableColumn orderIDCol = new TableColumn("OrderID");
@@ -62,17 +62,18 @@ public class GUIController implements Initializable {
         
   
     }
-    
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-    }
-
+   
     public void showAlert(AlertType alertType, String titleText, String headerText, String contentText){
         Alert alert = new Alert(alertType);
         alert.setTitle(titleText);
         alert.setHeaderText(headerText);
         alert.setContentText(contentText);
     }
+     
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+    }
+
 
    
     
