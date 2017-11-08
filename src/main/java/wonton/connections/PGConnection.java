@@ -43,14 +43,10 @@ public class PGConnection implements IConnection {
     }
 
     @Override
-    public void querySql(String query) {
-        try {
-            this.statement = connection.createStatement();
-            this.statement.executeQuery(query);
-            statement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public void querySql(String query) throws SQLException {
+        this.statement = connection.createStatement();
+        this.statement.executeQuery(query);
+        statement.close();
     }
 
     @Override
