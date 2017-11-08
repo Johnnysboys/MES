@@ -3,6 +3,7 @@ import wonton.types.ConstStatements;
 import wonton.types.DataTypes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static java.lang.String.join;
@@ -92,31 +93,35 @@ public class SQLConstructor {
     }
 
     public static String select(Model model){
-        return select(model, new String[]{}, "*");
+        return select(model, "*");
     }
 
-    private static String select(Model model, String[] parameterString, String... attributes){
+    private static String selectQuery(Model model, String[] attributes, List<Parameter> parameters){
         StringBuilder query = new StringBuilder();
         query.append(join(" ",
                 ConstStatements.SELECT.toString(),
                 join(",", attributes),
                 "FROM",
                 model.getTableName()));
-        if(parameterString != null && parameterString.length > 0){
+        if(parameters != null && parameters.size() > 0){
+            String[] parameterString = new String[parameters.size()];
+            for(int i = 0; i < parameters.size(); i++){
+                parameterString[i] = parameters.get(i).toString();
+            }
+
             query.append(" WHERE " + join(" AND ", parameterString));
         }
         query.append(";");
         return query.toString();
     }
     public static String select(Model model, List<Parameter> parameters){
-        String[] parameterString = new String[parameters.size()];
-        for(int i = 0; i < parameters.size(); i++){
-            parameterString[i] = parameters.get(i).toString();
-        }
-        return select(model, parameterString, "*");
+        return selectQuery(model, new String[]{"*"}, parameters);
+    }
+    public static String select(Model model, Parameter... parameters){
+        return selectQuery(model, new String[]{"*"}, Arrays.asList(parameters));
     }
     public static String select(Model model, String... attributes){
-        return select(model, null, attributes);
+        return selectQuery(model, attributes, null);
     }
 
 
