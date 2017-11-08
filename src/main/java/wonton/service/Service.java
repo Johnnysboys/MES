@@ -1,5 +1,6 @@
 package wonton.service;
 
+import org.postgresql.util.PSQLException;
 import wonton.*;
 import wonton.exceptions.DoesNotExistsInModelException;
 import wonton.exceptions.IsNotAnAllowedValueException;
@@ -7,6 +8,7 @@ import wonton.interfaces.IConnection;
 import wonton.interfaces.IService;
 import wonton.types.Operators;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +19,11 @@ public class Service implements IService {
     public Service(Model model, IConnection connection){
         this.model = model;
         this.connection = connection;
-        connection.querySql(SQLConstructor.createTable(this.model));
+        try {
+            connection.querySql(SQLConstructor.createTable(this.model));
+        } catch (SQLException e){
+
+        }
     }
 
     @Override
@@ -73,6 +79,17 @@ public class Service implements IService {
         }
         return null;
     }
+    @Override
+    public List<Row> find(Parameter... parameter) throws DoesNotExistsInModelException {
+        try{
+            String query = SQLConstructor.select(this.model, parameter);
+            System.out.println(query);
+            return this.connection.queryModel(query, this.model);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     @Override
     public Row get(int id) {
@@ -93,7 +110,11 @@ public class Service implements IService {
     public boolean delete(int id) {
         String query = SQLConstructor.delete(this.model, id);
         System.out.printf(query);
-        this.connection.querySql(query);
+        try {
+            this.connection.querySql(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
