@@ -48,8 +48,8 @@ public class OrderDAO {
      * @param order
      */
     public void updateOrder(OrderDTO order) {
-        /**
-         * @TODO implement SQL call.
+        /*
+        *TODO
          */
     }
 

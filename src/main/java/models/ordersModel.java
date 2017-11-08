@@ -27,8 +27,8 @@ public class ordersModel extends Model {
         Definition location = new Definition("location", STRING);
         Definition serialNumber = new Definition("serialnumber", STRING);
 
-        Definition quatity = new Definition("quantity", INTEGER);
-        quatity.setConstraints(new Constraint(NOTNULL));
+        Definition quantity = new Definition("quantity", INTEGER);
+        quantity.setConstraints(new Constraint(NOTNULL));
 
         Definition reportremainderasfinish = new Definition("reportremainderasfinish", STRING);
         Definition delivery = new Definition("delivery", DATE);
@@ -40,8 +40,9 @@ public class ordersModel extends Model {
         status.setAllowedValues("Scheduled", "Ended", "Started");
 
         Definition remainstatus = new Definition("remainstatus", STRING);
-        Definition referencecType = new Definition("refereneceType", STRING);
+        Definition referenceType = new Definition("refereneceType", STRING);
 
-
+        this.setDefinitions(id,itemNumber,production,site,warehouse,location,serialNumber,quantity,reportremainderasfinish
+        ,delivery,status,remainstatus,referenceType);
     }
 }
