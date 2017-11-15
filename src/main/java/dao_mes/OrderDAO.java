@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.*;
 import models.ordersModel;
+import wonton.Data;
 import wonton.Row;
 import wonton.Wonton;
 import wonton.connections.PGConnection;
@@ -48,9 +49,32 @@ public class OrderDAO {
      * @param order
      */
     public void updateOrder(OrderDTO order) {
-        /*
-        *TODO
-         */
+        String tempStatus=null;
+        switch(order.getStatus()){
+            case SCHEDULED:
+                tempStatus="Scheduled";
+                break;
+            case IN_PRODUCTION:
+                tempStatus="Started";
+                break;
+            case DELIVERED:
+                tempStatus="Ended";
+            case UNSCHEDULED:
+                tempStatus="Scheduled";
+        }
+        String finalStatus=tempStatus;
+        List<Row> list = caller.find();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        for (Row r:list){
+            if(((String) r.get("production").getData()).equals(order.getOrderNumber())){
+                caller.update((Integer) r.get("id").getData(),
+                        new ArrayList<Data>(){{
+                            add(new Data("quantity",order.getQuantity()));
+                            add(new Data("delivery",formatter.format(order.getOrderedFor())));
+                            add(new Data("status",finalStatus));
+                        }});
+            }
+        }
     }
 
     public List<OrderDTO> getAllOrders() {
@@ -67,7 +91,7 @@ public class OrderDAO {
                     orders.put((String) r.get("production").getData(), new OrderDTO((String) r.get("production").getData(),
                             r.get("itemnumber").getData().toString(),
                             Integer.valueOf(r.get("quantity").getData().toString().split("\\.")[0]),
-                            formatter.parse(r.get("delivery").toString())));
+                            formatter.parse(r.get("delivery").getData().toString())));
                 }
             }
         }catch (ParseException e){

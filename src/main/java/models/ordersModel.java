@@ -40,7 +40,7 @@ public class ordersModel extends Model {
         status.setAllowedValues("Scheduled", "Ended", "Started");
 
         Definition remainstatus = new Definition("remainstatus", STRING);
-        Definition referenceType = new Definition("refereneceType", STRING);
+        Definition referenceType = new Definition("referenceType", STRING);
 
         this.setDefinitions(id,itemNumber,production,site,warehouse,location,serialNumber,quantity,reportremainderasfinish
         ,delivery,status,remainstatus,referenceType);
