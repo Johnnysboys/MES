@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package main.java.GUI;
+package GUI;
 
 import dto_mes.OrderDTO;
 import java.net.URL;
@@ -19,6 +19,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import head.MESController;
+import javafx.event.Event;
+import javafx.scene.control.Button;
 
 /**
  *
@@ -38,12 +40,31 @@ public class GUIController implements Initializable {
     MESController MESController = new MESController();
     @FXML
     private TableView<OrderDTO> OrderTable;
+    @FXML
+    private Button updatebtn;
     
     private void handleButtonAction(ActionEvent event) {
      
     }
+
+    @FXML
+    private void update(ActionEvent event){
+        OrderTable.refresh();
+        
+        
+    }
     
-    private void setOrderTableview(MESController mc){
+   
+//    public void showAlert(AlertType alertType, String titleText, String headerText, String contentText){
+//        Alert alert = new Alert(alertType);
+//        alert.setTitle(titleText);
+//        alert.setHeaderText(headerText);
+//        alert.setContentText(contentText);
+//    }
+     
+    
+    public void initialize(URL url, ResourceBundle rb, MESController mc) {
+        
         TableColumn articleNumberCol = new TableColumn("Article Number");
         TableColumn quantityCol = new TableColumn("Quantity");
         TableColumn orderIDCol = new TableColumn("OrderID");
@@ -54,24 +75,17 @@ public class GUIController implements Initializable {
         quantityCol.setMinWidth(200);
         orderIDCol.setCellValueFactory(new PropertyValueFactory<>("OrderID"));
         orderIDCol.setMinWidth(200);
-        
         OrderTable.getColumns().addAll(articleNumberCol, quantityCol, orderIDCol);
         
-        OrderTable.setItems(mc.getERPArticleNumber());
+        OrderTable.setItems(mc.getERPOrderList());
         
-        
-  
-    }
-   
-    public void showAlert(AlertType alertType, String titleText, String headerText, String contentText){
-        Alert alert = new Alert(alertType);
-        alert.setTitle(titleText);
-        alert.setHeaderText(headerText);
-        alert.setContentText(contentText);
-    }
-     
+
+        }
+
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL location, ResourceBundle resources) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     }
 
 
