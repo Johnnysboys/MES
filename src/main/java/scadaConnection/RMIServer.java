@@ -49,12 +49,14 @@ public class RMIServer extends AbstractMES{
     }
 
     public void executeOrder(OrderDTO orderDTO) throws RemoteException {
-        orderDTO.setStatus(OrderStatus.SCHEDULED);
-        try {
-            super.executeOrder(new OrderINFO(orderDTO.getArticleNumber(),orderDTO.getToBePlanted(),orderDTO.getOrderNumber()));
-        } catch (ExceedsCapacityException e) {
-            return;
+        if(orderDTO.getStatus().equals(OrderStatus.UNSCHEDULED)){
+            orderDTO.setStatus(OrderStatus.SCHEDULED);
+            try {
+                super.executeOrder(new OrderINFO(orderDTO.getArticleNumber(),orderDTO.getToBePlanted(),orderDTO.getOrderNumber()));
+            } catch (ExceedsCapacityException e) {
+                return;
+            }
+            orderDTO.setStatus(OrderStatus.IN_PRODUCTION);
         }
-        orderDTO.setStatus(OrderStatus.IN_PRODUCTION);
     }
 }
