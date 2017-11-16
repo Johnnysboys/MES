@@ -1,4 +1,4 @@
-package scadaConnection;
+package main.java.scadaConnection;
 
 import dao_mes.OrderDAO;
 import dto_mes.OrderDTO;
@@ -21,7 +21,7 @@ public class RMIServer extends AbstractMES{
             Registry registry = LocateRegistry.createRegistry(RMI_Constants.MES_PORT);
             IMESServer mes = this;
             registry.bind(RMI_Constants.MES_OBJECTNAME, mes);
-        } catch (RemoteException | AlreadyBoundException e) {
+        } catch (AlreadyBoundException e) {
             e.printStackTrace();
         }
     }
