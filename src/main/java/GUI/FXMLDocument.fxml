@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -7,22 +10,23 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="586.0" prefWidth="928.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.GUIController">
+<AnchorPane id="AnchorPane" prefHeight="586.0" prefWidth="928.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.GUIController">
     <children>
         <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
       <TabPane layoutX="47.0" layoutY="8.0" prefHeight="586.0" prefWidth="928.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
           <Tab text="Orders">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="557.0" prefWidth="801.0">
                      <children>
-                        <TableView fx:id="OrderTable" layoutX="82.0" layoutY="79.0" prefHeight="557.0" prefWidth="928.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="OrderTable" layoutX="82.0" layoutY="79.0" prefHeight="557.0" prefWidth="733.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="195.0" AnchorPane.topAnchor="0.0">
                           <columns>
                             <TableColumn fx:id="OrderPane" prefWidth="111.0" text="Order ID" />
                             <TableColumn fx:id="OrdersInProgressPane" prefWidth="103.0" text="Article number" />
                               <TableColumn fx:id="OrderDonePane" prefWidth="98.0" text="Quantity" />
                           </columns>
                         </TableView>
+                        <Button fx:id="updatebtn" layoutX="775.0" layoutY="53.0" mnemonicParsing="false" onAction="#update" prefHeight="51.0" prefWidth="99.0" text="UPDATE!" />
                      </children>
                   </AnchorPane>
             </content>
