@@ -86,9 +86,5 @@ public class GUIController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    }
-
-
-   
-    
 }
+
