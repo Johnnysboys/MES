@@ -63,11 +63,11 @@ public class GUIController implements Initializable {
 //    }
      
     
-    public void initialize(URL url, ResourceBundle rb, MESController mc) {
-        
+    public void initialize(URL url, ResourceBundle rb, MESController mc) { 
         TableColumn articleNumberCol = new TableColumn("Article Number");
         TableColumn quantityCol = new TableColumn("Quantity");
         TableColumn orderIDCol = new TableColumn("OrderID");
+        
         
         articleNumberCol.setCellValueFactory(new PropertyValueFactory<>("Article Number"));
         articleNumberCol.setMinWidth(200);
@@ -92,3 +92,4 @@ public class GUIController implements Initializable {
    
     
 }
+

@@ -21,7 +21,13 @@ public class OrderDAO {
     private Service caller;
     private static OrderDAO instance;
     private Map<String,OrderDTO> orders;
-
+    
+    /*
+    This is a sigleton class.
+    When you call the method you get the single instance of the class.
+    That is the purpose of a singleton. The keyword synchronized,
+    which makes it thread safe.
+    */
     public static synchronized OrderDAO get(){
         if(instance==null)
             instance=new OrderDAO();
@@ -36,7 +42,11 @@ public class OrderDAO {
             e.printStackTrace();
         }
     }
-
+    /*
+    Checks if there exist a key with the given orderID
+    and return it. If there does not exist an orderID
+    get all orders. 
+    */
     public OrderDTO getOrder(String orderID) {
         if(orders.containsKey(orderID))
             return orders.get(orderID);
