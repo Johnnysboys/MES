@@ -44,10 +44,7 @@ public class OrderDAO {
         return orders.get(orderID);
     }
 
-    /**
-     * NOT IMPLEMENTED
-     * @param order
-     */
+
     public void updateOrder(OrderDTO order) {
         String tempStatus=null;
         switch(order.getStatus()){
@@ -72,9 +69,11 @@ public class OrderDAO {
                             add(new Data("quantity",order.getQuantity()));
                             add(new Data("delivery",formatter.format(order.getOrderedFor())));
                             add(new Data("status",finalStatus));
+                            add(new Data("remainstatus",(order.getQuantity()-order.getAmountHarvested())));
                         }});
             }
         }
+        getAllOrders();
     }
 
     public List<OrderDTO> getAllOrders() {
@@ -91,7 +90,9 @@ public class OrderDAO {
                     orders.put((String) r.get("production").getData(), new OrderDTO((String) r.get("production").getData(),
                             r.get("itemnumber").getData().toString(),
                             Integer.valueOf(r.get("quantity").getData().toString().split("\\.")[0]),
-                            formatter.parse(r.get("delivery").getData().toString())));
+                            formatter.parse(r.get("delivery").getData().toString())){{
+                                this.addHarvested(Integer.valueOf(r.get("remainstatus").getData().toString()));
+                    }});
                 }
             }
         }catch (ParseException e){

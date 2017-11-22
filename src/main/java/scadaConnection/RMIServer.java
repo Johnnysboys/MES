@@ -28,7 +28,11 @@ public class RMIServer extends AbstractMES{
 
     @Override
     public void alertPlanted(String orderID) throws RemoteException {
-        new Thread(()->OrderDAO.get().getOrder(orderID).addPlanted(1)).start();
+        new Thread(()->{
+            OrderDTO temp =OrderDAO.get().getOrder(orderID);
+            temp.addPlanted(1);
+            OrderDAO.get().updateOrder(temp);
+        }).start();
     }
 
     /**
@@ -37,7 +41,11 @@ public class RMIServer extends AbstractMES{
      */
     @Override
     public void alertDiscarded(String orderID) throws RemoteException {
-        new Thread(()->OrderDAO.get().getOrder(orderID).addDiscarded(1)).start();
+        new Thread(() -> {
+                OrderDTO temp =OrderDAO.get().getOrder(orderID);
+                temp.addDiscarded(1);
+                OrderDAO.get().updateOrder(temp);
+        }).start();
     }
     /**
      * @param orderID
@@ -45,7 +53,11 @@ public class RMIServer extends AbstractMES{
      */
     @Override
     public void alertHarvest(String orderID) throws RemoteException {
-        new Thread(()->OrderDAO.get().getOrder(orderID).addHarvested(1)).start();
+        new Thread(()-> {
+            OrderDTO temp =OrderDAO.get().getOrder(orderID);
+            temp.addHarvested(1);
+            OrderDAO.get().updateOrder(temp);
+        }).start();
     }
 
     public void executeOrder(OrderDTO orderDTO) throws RemoteException {
