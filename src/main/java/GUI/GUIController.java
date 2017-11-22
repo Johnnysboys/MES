@@ -70,6 +70,8 @@ public class GUIController implements Initializable {
     private void handleExecute(ActionEvent event, RMIServer rmi, MESController mc){
         try {
             rmi.executeOrder((OrderDTO) mc.getERPOrderList());
+            OrderTable.refresh();
+            ERPTable.refresh();
         } catch (RemoteException ex) {
             Logger.getLogger(GUIController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -101,8 +103,21 @@ public class GUIController implements Initializable {
         statusCol.setCellValueFactory(new PropertyValueFactory<>("Status"));
         orderIDCol.setMinWidth(200);
         OrderTable.getColumns().addAll(articleNumberCol, quantityCol, orderIDCol);
+        OrderTable.setItems(mc.getOrderList());
         
-        OrderTable.setItems(mc.getERPOrderList());
+        TableColumn orderIDERP = new TableColumn("Order ID(ERP)");
+        TableColumn articleNumberERP = new TableColumn("Articlenumber(ERP)");
+        TableColumn QuantityERP = new TableColumn("Quantity(ERP)");
+        
+        orderIDERP.setCellFactory(new PropertyValueFactory<>("Order ID(ERP)"));
+        orderIDERP.setMinWidth(200);
+        articleNumberERP.setCellValueFactory(new PropertyValueFactory<>("Articlenumber(ERP)"));
+        articleNumberERP.setMinWidth(200);
+        QuantityERP.setCellValueFactory(new PropertyValueFactory<>("Quantity(ERP)"));
+        QuantityERP.setMinWidth(200);
+        ERPTable.getColumns().addAll(orderIDERP, articleNumberERP, QuantityERP);
+        ERPTable.setItems(mc.getERPOrderList());
+
         
 
         }
