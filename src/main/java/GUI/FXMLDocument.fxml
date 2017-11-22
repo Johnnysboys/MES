@@ -19,19 +19,28 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="557.0" prefWidth="801.0">
                      <children>
-                        <TableView fx:id="OrderTable" layoutX="82.0" layoutY="79.0" prefHeight="557.0" prefWidth="733.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="195.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="OrderTable" layoutX="82.0" layoutY="79.0" prefHeight="557.0" prefWidth="440.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="488.0" AnchorPane.topAnchor="0.0">
                           <columns>
                             <TableColumn fx:id="OrderPane" prefWidth="111.0" text="Order ID" />
                             <TableColumn fx:id="OrdersInProgressPane" prefWidth="103.0" text="Article number" />
                               <TableColumn fx:id="OrderDonePane" prefWidth="98.0" text="Quantity" />
+                              <TableColumn fx:id="OrderPane1" prefWidth="111.0" text="Status" />
                           </columns>
                         </TableView>
-                        <Button fx:id="updatebtn" layoutX="775.0" layoutY="53.0" mnemonicParsing="false" onAction="#update" prefHeight="51.0" prefWidth="99.0" text="UPDATE!" />
+                        <Button fx:id="updatebtn" layoutX="815.0" layoutY="48.0" mnemonicParsing="false" onAction="#update" prefHeight="51.0" prefWidth="99.0" text="UPDATE!" />
+                        <Button fx:id="ExecuteOrder66" layoutX="815.0" layoutY="192.0" mnemonicParsing="false" onAction="#handleExecute" prefHeight="51.0" prefWidth="99.0" text="EXECUTE!" />
+                        <TableView fx:id="ERPTable" layoutX="440.0" prefHeight="557.0" prefWidth="363.0">
+                           <columns>
+                              <TableColumn fx:id="OrderPane1" prefWidth="111.0" text="Order ID(ERP)" />
+                              <TableColumn fx:id="OrdersInProgressPane1" prefWidth="121.0" text="Articlenumber (ERP)" />
+                              <TableColumn fx:id="OrderDonePane1" prefWidth="130.0" text="Quantity (ERP)" />
+                           </columns>
+                        </TableView>
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Scada Systems">
+          <Tab text="Logging">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
             </content>

@@ -19,8 +19,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import head.MESController;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.Event;
 import javafx.scene.control.Button;
+import main.java.scadaConnection.RMIServer;
 
 /**
  *
@@ -42,6 +46,16 @@ public class GUIController implements Initializable {
     private TableView<OrderDTO> OrderTable;
     @FXML
     private Button updatebtn;
+    @FXML
+    private TableColumn<?, ?> OrderPane1;
+    @FXML
+    private Button ExecuteOrder66;
+    @FXML
+    private TableColumn<?, ?> OrdersInProgressPane1;
+    @FXML
+    private TableColumn<?, ?> OrderDonePane1;
+    @FXML
+    private TableView<?> ERPTable;
     
     private void handleButtonAction(ActionEvent event) {
      
@@ -51,6 +65,14 @@ public class GUIController implements Initializable {
     private void update(ActionEvent event){
         OrderTable.refresh();
         
+          }
+    
+    private void handleExecute(ActionEvent event, RMIServer rmi, MESController mc){
+        try {
+            rmi.executeOrder((OrderDTO) mc.getERPOrderList());
+        } catch (RemoteException ex) {
+            Logger.getLogger(GUIController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
     
@@ -68,12 +90,15 @@ public class GUIController implements Initializable {
         TableColumn articleNumberCol = new TableColumn("Article Number");
         TableColumn quantityCol = new TableColumn("Quantity");
         TableColumn orderIDCol = new TableColumn("OrderID");
+        TableColumn statusCol = new TableColumn("Status");
         
         articleNumberCol.setCellValueFactory(new PropertyValueFactory<>("Article Number"));
         articleNumberCol.setMinWidth(200);
         quantityCol.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
         quantityCol.setMinWidth(200);
         orderIDCol.setCellValueFactory(new PropertyValueFactory<>("OrderID"));
+        orderIDCol.setMinWidth(200);
+        statusCol.setCellValueFactory(new PropertyValueFactory<>("Status"));
         orderIDCol.setMinWidth(200);
         OrderTable.getColumns().addAll(articleNumberCol, quantityCol, orderIDCol);
         
@@ -86,9 +111,12 @@ public class GUIController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @FXML
+    private void handleExecute(ActionEvent event) {
+    }
     }
 
 
    
     
-}
