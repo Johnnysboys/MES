@@ -19,8 +19,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import head.MESController;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.Event;
 import javafx.scene.control.Button;
+import main.java.scadaConnection.RMIServer;
 
 /**
  *
@@ -42,6 +46,16 @@ public class GUIController implements Initializable {
     private TableView<OrderDTO> OrderTable;
     @FXML
     private Button updatebtn;
+    @FXML
+    private TableColumn<?, ?> OrderPane1;
+    @FXML
+    private Button ExecuteOrder66;
+    @FXML
+    private TableColumn<?, ?> OrdersInProgressPane1;
+    @FXML
+    private TableColumn<?, ?> OrderDonePane1;
+    @FXML
+    private TableView<?> ERPTable;
     
     private void handleButtonAction(ActionEvent event) {
      
@@ -51,6 +65,16 @@ public class GUIController implements Initializable {
     private void update(ActionEvent event){
         OrderTable.refresh();
         
+          }
+    
+    private void handleExecute(ActionEvent event, RMIServer rmi, MESController mc){
+        try {
+            rmi.executeOrder((OrderDTO) mc.getERPOrderList());
+            OrderTable.refresh();
+            ERPTable.refresh();
+        } catch (RemoteException ex) {
+            Logger.getLogger(GUIController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
     
@@ -68,6 +92,7 @@ public class GUIController implements Initializable {
         TableColumn articleNumberCol = new TableColumn("Article Number");
         TableColumn quantityCol = new TableColumn("Quantity");
         TableColumn orderIDCol = new TableColumn("OrderID");
+        TableColumn statusCol = new TableColumn("Status");
         
         articleNumberCol.setCellValueFactory(new PropertyValueFactory<>("Article Number"));
         articleNumberCol.setMinWidth(200);
@@ -75,16 +100,27 @@ public class GUIController implements Initializable {
         quantityCol.setMinWidth(200);
         orderIDCol.setCellValueFactory(new PropertyValueFactory<>("OrderID"));
         orderIDCol.setMinWidth(200);
+        statusCol.setCellValueFactory(new PropertyValueFactory<>("Status"));
+        orderIDCol.setMinWidth(200);
         OrderTable.getColumns().addAll(articleNumberCol, quantityCol, orderIDCol);
+        OrderTable.setItems(mc.getOrderList());
         
-        OrderTable.setItems(mc.getERPOrderList());
+        TableColumn orderIDERP = new TableColumn("Order ID(ERP)");
+        TableColumn articleNumberERP = new TableColumn("Articlenumber(ERP)");
+        TableColumn QuantityERP = new TableColumn("Quantity(ERP)");
+        
+        orderIDERP.setCellFactory(new PropertyValueFactory<>("Order ID(ERP)"));
+        orderIDERP.setMinWidth(200);
+        articleNumberERP.setCellValueFactory(new PropertyValueFactory<>("Articlenumber(ERP)"));
+        articleNumberERP.setMinWidth(200);
+        QuantityERP.setCellValueFactory(new PropertyValueFactory<>("Quantity(ERP)"));
+        QuantityERP.setMinWidth(200);
+        ERPTable.getColumns().addAll(orderIDERP, articleNumberERP, QuantityERP);
+        ERPTable.setItems(mc.getERPOrderList());
+
         
 
         }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }
 
