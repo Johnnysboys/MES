@@ -24,6 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.Event;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import main.java.scadaConnection.RMIServer;
 
 /**
@@ -57,13 +58,17 @@ public class GUIController implements Initializable {
     @FXML
     private TableView<?> ERPTable;
     
-    private void handleButtonAction(ActionEvent event) {
-     
-    }
+    @FXML
+    private ScrollPane LoggingText;
+    
 
+    
+    private MESController mc = new MESController();
+    
     @FXML
     private void update(ActionEvent event){
         OrderTable.refresh();
+        ERPTable.refresh();
         
           }
     
@@ -86,9 +91,11 @@ public class GUIController implements Initializable {
 //        alert.setContentText(contentText);
 //    }
      
-    
-    public void initialize(URL url, ResourceBundle rb, MESController mc) {
-        
+
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+                
         TableColumn articleNumberCol = new TableColumn("Article Number");
         TableColumn quantityCol = new TableColumn("Quantity");
         TableColumn orderIDCol = new TableColumn("OrderID");
@@ -117,10 +124,16 @@ public class GUIController implements Initializable {
         QuantityERP.setMinWidth(200);
         ERPTable.getColumns().addAll(orderIDERP, articleNumberERP, QuantityERP);
         ERPTable.setItems(mc.getERPOrderList());
-
         
+        
+        
+        
+    }
 
-        }
+   
+    
+
+
 
 }
 
