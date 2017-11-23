@@ -25,7 +25,6 @@ import java.util.logging.Logger;
 import javafx.event.Event;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import main.java.scadaConnection.RMIServer;
 
 /**
  *
@@ -73,13 +72,9 @@ public class GUIController implements Initializable {
           }
     
     private void handleExecute(ActionEvent event, RMIServer rmi, MESController mc){
-        try {
-            rmi.executeOrder((OrderDTO) mc.getERPOrderList());
-            OrderTable.refresh();
-            ERPTable.refresh();
-        } catch (RemoteException ex) {
-            Logger.getLogger(GUIController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        rmi.executeOrder((OrderDTO) mc.getERPOrderList());
+        OrderTable.refresh();
+        ERPTable.refresh();
         
     }
     

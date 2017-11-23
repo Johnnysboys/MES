@@ -10,7 +10,6 @@ import dto_mes.OrderDTO;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import main.java.scadaConnection.RMIServer;
 
 /**
  *
