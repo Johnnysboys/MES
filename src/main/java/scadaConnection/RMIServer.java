@@ -3,16 +3,14 @@ import dao_mes.OrderDAO;
 import dto_mes.OrderDTO;
 import dto.OrderINFO;
 import dto_mes.OrderStatus;
-import mes.AbstractMES;
 import mes.RMI_Constants;
 import mes.ExceedsCapacityException;
-import scada.ISCADAObserver;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
-public class RMIServer extends AbstractMES{
+public class RMIServer extends AbstractMES {
 
     public RMIServer() throws RemoteException {
         super();
