@@ -25,11 +25,13 @@ public class OrderDAO {
     public static synchronized OrderDAO get(){
         if(instance==null)
             instance=new OrderDAO();
+        System.out.println("Returning OrderDAO");
         return instance;
     }
 
     private OrderDAO(){
         try {
+            System.out.println("Created OrderDAO");
             wonton = new Wonton(new PGConnection("admin_dhk", "admin_dhk", "code1234", "51.254.143.91"));
             caller = wonton.createService(new ordersModel());
         } catch (SQLException e) {
@@ -66,10 +68,10 @@ public class OrderDAO {
             if(((String) r.get("production").getData()).equals(order.getOrderNumber())){
                 caller.update((Integer) r.get("id").getData(),
                         new ArrayList<Data>(){{
-                            add(new Data("quantity",order.getQuantity()));
-                            add(new Data("delivery",formatter.format(order.getOrderedFor())));
-                            add(new Data("status",finalStatus));
-                            add(new Data("remainstatus",(order.getQuantity()-order.getAmountHarvested())));
+                            add(new Data<>("quantity",order.getQuantity()));
+                            add(new Data<>("delivery",formatter.format(order.getOrderedFor())));
+                            add(new Data<>("status",finalStatus));
+                            //add(new Data<>("remainstatus",(order.getQuantity()-order.getAmountHarvested())));
                         }});
             }
         }
@@ -77,6 +79,7 @@ public class OrderDAO {
     }
 
     public List<OrderDTO> getAllOrders() {
+        System.out.println("Getting all orders");
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         if(orders==null)
             orders=new HashMap<>();
@@ -87,17 +90,21 @@ public class OrderDAO {
                 if (orders.containsKey((String) r.get("production").getData()))
                     continue;
                 else {
-                    orders.put((String) r.get("production").getData(), new OrderDTO((String) r.get("production").getData(),
+                    orders.put((String) r.get("production").getData(),
+                            new OrderDTO((String) r.get("production").getData(),
                             r.get("itemnumber").getData().toString(),
                             Integer.valueOf(r.get("quantity").getData().toString().split("\\.")[0]),
-                            formatter.parse(r.get("delivery").getData().toString())){{
-                                this.addHarvested(Integer.valueOf(r.get("remainstatus").getData().toString()));
-                    }});
+                            formatter.parse(r.get("delivery").getData().toString()))
+                    );
+                    //{{
+                  //  this.addHarvested(Integer.valueOf(r.get("remainstatus").getData().toString()));
+                //}}
                 }
             }
         }catch (ParseException e){
             e.printStackTrace();
         }
+        System.out.println("Returning list of orders to Server");
         return new ArrayList<>(orders.values());
     }
     

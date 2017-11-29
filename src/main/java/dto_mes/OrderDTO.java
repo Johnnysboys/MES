@@ -38,6 +38,16 @@ public OrderDTO(String orderNumber, String articleNumber, int quantity, Date ord
     this.toBeDeliveredOn = this.orderedFor;
     this.status = OrderStatus.UNSCHEDULED;
 }
+public OrderDTO(String orderNumber, String articleNumber, int quantity, Date orderedFor, int remaining){
+    this.orderNumber = orderNumber;
+    this.articleNumber = articleNumber;
+    this.quantity = quantity;
+    this.toBePlanted=quantity+((int) Math.ceil((double)quantity/5));
+    this.orderedFor = orderedFor;
+    this.toBeDeliveredOn = this.orderedFor;
+    this.status = OrderStatus.UNSCHEDULED;
+    this.amountHarvested=quantity-remaining;
+}
 
     public OrderDTO() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -126,6 +136,7 @@ public OrderDTO(String orderNumber, String articleNumber, int quantity, Date ord
             this.amountHarvested += amountHarvested;
         if (amountHarvested>=quantity){
             this.status=OrderStatus.DELIVERED;
+            System.out.println("Order has been finished, status set to delivered.");
         }
     }
 

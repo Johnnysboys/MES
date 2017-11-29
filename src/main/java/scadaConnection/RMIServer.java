@@ -6,6 +6,8 @@ import dto_mes.OrderStatus;
 import mes.AbstractMES;
 import mes.RMI_Constants;
 import mes.ExceedsCapacityException;
+import scada.ISCADAObserver;
+
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -16,8 +18,9 @@ public class RMIServer extends AbstractMES{
         super();
         //Uses shared constants from the MESCADAPI.jar library.
         Registry registry = LocateRegistry.createRegistry(RMI_Constants.MES_PORT);
+        System.out.println("Registry created.");
         registry.rebind(RMI_Constants.MES_OBJECTNAME, this);
-
+        System.out.println("Server was bound.");
     }
 
     @Override
@@ -25,9 +28,10 @@ public class RMIServer extends AbstractMES{
         //Starts new thread which sends commands to the OrderDAO.
         //It is possible that the rmi server starts threads implicitly, but it should always start a new thread.
         new Thread(()->{
-            OrderDTO temp =OrderDAO.get().getOrder(orderID);
-            temp.addPlanted(1);
-            OrderDAO.get().updateOrder(temp);
+            System.out.println("Alert planted was registered.");
+            OrderDAO.get().getOrder(orderID).addPlanted(1);
+            OrderDAO.get().updateOrder(OrderDAO.get().getOrder(orderID));
+            System.out.println("Order updated after alert planted.");
         }).start();
     }
 
@@ -38,9 +42,10 @@ public class RMIServer extends AbstractMES{
     @Override
     public void alertDiscarded(String orderID) throws RemoteException {
         new Thread(() -> {
-                OrderDTO temp =OrderDAO.get().getOrder(orderID);
-                temp.addDiscarded(1);
-                OrderDAO.get().updateOrder(temp);
+            System.out.println("alertDiscarded was registered.");
+                OrderDAO.get().getOrder(orderID).addDiscarded(1);
+                OrderDAO.get().updateOrder(OrderDAO.get().getOrder(orderID));
+            System.out.println("Order updated after discarded was registered.");
         }).start();
     }
     /**
@@ -50,9 +55,10 @@ public class RMIServer extends AbstractMES{
     @Override
     public void alertHarvest(String orderID) throws RemoteException {
         new Thread(()-> {
-            OrderDTO temp =OrderDAO.get().getOrder(orderID);
-            temp.addHarvested(1);
-            OrderDAO.get().updateOrder(temp);
+            System.out.println("alertHarvesting was registered.");
+            OrderDAO.get().getOrder(orderID).addHarvested(1);
+            OrderDAO.get().updateOrder(OrderDAO.get().getOrder(orderID));
+            System.out.println("Order has been updated after harvesting.");
         }).start();
     }
 
