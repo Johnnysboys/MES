@@ -28,6 +28,13 @@
             <version>42.1.4</version>
         </dependency>
 
+        <dependency>
+            <groupId>mes</groupId>
+            <artifactId>MESCADAPI</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/MESCADAPI.jar</systemPath>
+        </dependency>
 
     </dependencies>
 

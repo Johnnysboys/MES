@@ -57,16 +57,6 @@ public class MESController {
         return allOrders;
     }
     
-  
-    
-    public void getInProgressOrderList(){
-        
-    }
-    
-    public void getDoneOrderList(){
-        
-    }
-    
     
     
     

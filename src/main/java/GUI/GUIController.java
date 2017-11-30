@@ -17,6 +17,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import head.MESController;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import mes.ExceedsCapacityException;
@@ -67,10 +70,25 @@ public class GUIController implements Initializable {
         
           }
     
-    private void handleExecute(ActionEvent event, RMIServer rmi, MESController mc) throws ExceedsCapacityException, RemoteException {
-        rmi.executeOrder((OrderDTO) mc.getERPOrderList());
-        OrderTable.refresh();
-        ERPTable.refresh();
+    private void handleExecute(ActionEvent event, RMIServer rmi, MESController mc){
+        
+        Iterator itr = mc.getERPOrderList().iterator();
+        
+        while(itr.hasNext()){
+            try {
+                mc.getOrderList().add(mc.getERPOrderList().size()-1);
+                
+                int orderPlace = mc.getERPOrderList().size()-1;
+                int orderObject = mc.getERPOrderList().indexOf(orderPlace);
+                
+                rmi.executeOrder((OrderDTO) mc.getERPOrderList().get(orderObject));
+            } catch (RemoteException ex) {
+                Logger.getLogger(GUIController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ExceedsCapacityException ex) {
+                Logger.getLogger(GUIController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+       
         
     }
     
