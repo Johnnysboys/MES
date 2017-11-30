@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface IService {
     public boolean create(List<Data> data);
-    public boolean update(int id, List<Data> data);
+    public boolean update(List<Data> data, int id);
     public List<Row> find();
     public List<Row> find(String... columns) throws DoesNotExistsInModelException;
     public List<Row> find(Parameter... parameter) throws DoesNotExistsInModelException;
