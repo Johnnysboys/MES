@@ -50,6 +50,14 @@ public class MESController {
         return ERPQuantityList;
     }
     
+    public ObservableList getOrderList(){
+        ArrayList ERPArrayList = (ArrayList) OrderDAO.get().getAllOrders();
+        ObservableList<OrderDTO> allOrders = FXCollections.observableArrayList(ERPArrayList);
+        
+        return allOrders;
+    }
+    
+  
     
     public void getInProgressOrderList(){
         

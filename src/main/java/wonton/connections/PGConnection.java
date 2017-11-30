@@ -55,10 +55,12 @@ public class PGConnection implements IConnection {
             PreparedStatement ps = connection.prepareStatement(query);
             for (Data data : _data) {
                 int index = _data.indexOf(data) + 1;
-                if (data.getData() instanceof String) ps.setString(index, (String) data.getData());
-                if (data.getData() instanceof Boolean) ps.setBoolean(index, (Boolean) data.getData());
-                if (data.getData() instanceof Integer) ps.setInt(index, (Integer) data.getData());
-                if (data.getData() instanceof Double) ps.setDouble(index, (Double) data.getData());
+                if (data.getData() instanceof String)   ps.setString(index, (String) data.getData());
+                if (data.getData() instanceof Boolean)  ps.setBoolean(index, (Boolean) data.getData());
+                if (data.getData() instanceof Integer)  ps.setInt(index, (Integer) data.getData());
+                if (data.getData() instanceof Double)   ps.setDouble(index, (Double) data.getData());
+                if (data.getData() instanceof Float)    ps.setFloat(index, (Float) data.getData());
+                if (data.getData() instanceof Date)     ps.setDate(index, (Date) data.getData());
             }
             ps.execute();
             ps.close();
