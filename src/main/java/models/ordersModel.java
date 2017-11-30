@@ -27,8 +27,8 @@ public class ordersModel extends Model {
         Definition location = new Definition("location", STRING);
         Definition serialNumber = new Definition("serialnumber", STRING);
 
-        Definition quatity = new Definition("quantity", INTEGER);
-        quatity.setConstraints(new Constraint(NOTNULL));
+        Definition quantity = new Definition("quantity", INTEGER);
+        quantity.setConstraints(new Constraint(NOTNULL));
 
         Definition reportremainderasfinish = new Definition("reportremainderasfinish", STRING);
         Definition delivery = new Definition("delivery", DATE);
