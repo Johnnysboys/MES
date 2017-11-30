@@ -1,7 +1,6 @@
 package scadaConnection;
 
 import dto.OrderINFO;
-import mes.ExceedsCapacityException;
 import mes.IMESServer;
 import scada.ISCADAObserver;
 
@@ -21,7 +20,7 @@ public abstract class AbstractMES extends UnicastRemoteObject implements IMESSer
     public void addObserver(ISCADAObserver scada) throws RemoteException {
         observers.add(scada);
     }
-    public void executeOrder(OrderINFO orderINFO) throws ExceedsCapacityException, RemoteException {
+    protected void executeOrder(OrderINFO orderINFO) throws ExceedsCapacityException, RemoteException {
         if(!hasCapacity(orderINFO))
             throw new ExceedsCapacityException("Order quantity to large, accumulated capacity is below.");
         boolean capacityMatch=false;

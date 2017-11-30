@@ -40,9 +40,27 @@ public class ordersModel extends Model {
         status.setAllowedValues("Scheduled", "Ended", "Started");
 
         Definition remainstatus = new Definition("remainstatus", STRING);
-        Definition referenceType = new Definition("referenceType", STRING);
+        Definition referenceType = new Definition("referenecetype", STRING);
+        Definition pool = new Definition("pool", STRING);
+        Definition lockedforrescheduling = new Definition("lockedforrescheduling", STRING);
+        lockedforrescheduling.setConstraints(new Constraint(NOTNULL));
+        lockedforrescheduling.setAllowedValues("No", "Yes");
+        lockedforrescheduling.setDefaultValue("No");
 
-        this.setDefinitions(id,itemNumber,production,site,warehouse,location,serialNumber,quantity,reportremainderasfinish
-        ,delivery,status,remainstatus,referenceType);
+        this.setDefinitions(id,
+                itemNumber,
+                production,
+                site,
+                warehouse,
+                location,
+                serialNumber,
+                quatity,
+                reportremainderasfinish,
+                delivery,
+                status,
+                remainstatus,
+                referenceType,
+                pool,
+                lockedforrescheduling);
     }
 }

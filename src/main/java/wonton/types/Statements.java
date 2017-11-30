@@ -1,6 +1,6 @@
 package wonton.types;
 
-public enum ConstStatements {
+public enum Statements {
     CREATE("CREATE"),
     TABLE("TABLE"),
     UPDATE("UPDATE"),
@@ -18,7 +18,7 @@ public enum ConstStatements {
 
     private final String type;
 
-    ConstStatements(String type) {
+    Statements(String type) {
         this.type = type;
     }
 

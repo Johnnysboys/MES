@@ -9,7 +9,6 @@ public class Data<T> {
         this.data = data;
     }
 
-
     public String getField() {
         return this.field;
     }
@@ -17,6 +16,7 @@ public class Data<T> {
     public T getData() {
         return this.data;
     }
+
     @Override
     public String toString(){
         return "" + this.data;

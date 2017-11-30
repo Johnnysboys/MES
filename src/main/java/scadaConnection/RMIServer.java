@@ -4,7 +4,6 @@ import dto_mes.OrderDTO;
 import dto.OrderINFO;
 import dto_mes.OrderStatus;
 import mes.RMI_Constants;
-import mes.ExceedsCapacityException;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
