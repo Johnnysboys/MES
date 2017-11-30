@@ -67,9 +67,6 @@ public class Service implements IService {
     }
     public boolean update(List<Data> data, Parameter... parameters) {
         try {
-            System.out.println(data.size());
-            for(Data da : data)
-                System.out.println(da.toString());
             this.model.validateData(data);
             String query = SQLConstructor.update(model, data, parameters);
             System.out.println(query);
