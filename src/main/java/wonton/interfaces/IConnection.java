@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface IConnection {
-    public void querySql(String query) throws SQLException;
-    public ResultSet queryData(String query, List<Data> data);
-    public List<Row> queryModel(String query, Model model);
+    void querySql(String query) throws SQLException;
+    ResultSet queryData(String query, List<Data> data);
+    List<Row> queryModel(String query, Model model);
 }

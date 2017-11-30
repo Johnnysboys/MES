@@ -26,6 +26,11 @@ public class Service implements IService {
         }
     }
 
+    /**
+     * Insert data into the database
+     * @param data - list
+     * @return
+     */
     @Override
     public boolean create(List<Data> data) {
         try {
@@ -38,11 +43,35 @@ public class Service implements IService {
         return false;
     }
 
+    /**
+     * Update the id with a list of data
+     * Returns a true or false if the update is done.
+     * @param id - Int
+     * @param data - list with data
+     * @return boolean
+     */
     @Override
-    public boolean update(int id, List<Data> data) {
+    public boolean update(List<Data> data, int id) {
         try {
             this.model.validateData(data);
             String query = SQLConstructor.update(model, data, id);
+            System.out.println(query);
+            this.connection.queryData(query, data);
+            return true;
+        } catch (DoesNotExistsInModelException e) {
+            e.printStackTrace();
+        } catch (IsNotAnAllowedValueException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public boolean update(List<Data> data, Parameter... parameters) {
+        try {
+            System.out.println(data.size());
+            for(Data da : data)
+                System.out.println(da.toString());
+            this.model.validateData(data);
+            String query = SQLConstructor.update(model, data, parameters);
             System.out.println(query);
             this.connection.queryData(query, data);
             return true;
@@ -109,7 +138,6 @@ public class Service implements IService {
     @Override
     public boolean delete(int id) {
         String query = SQLConstructor.delete(this.model, id);
-        System.out.printf(query);
         try {
             this.connection.querySql(query);
         } catch (SQLException e) {
