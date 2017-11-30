@@ -87,16 +87,6 @@ public class SQLConstructor {
                 "FROM",
                 model.getTableName()));
         query.append(" WHERE " + join(" AND ", parameterBuilder(parameters)));
-
-
-//        if(parameters != null && parameters.size() > 0){
-//            String[] parameterString = new String[parameters.size()];
-//            for(int i = 0; i < parameters.size(); i++){
-//                parameterString[i] = parameters.get(i).toString();
-//            }
-//
-//            query.append(" WHERE " + join(" AND ", parameterString));
-//        }
         query.append(";");
         return query.toString();
     }
@@ -143,7 +133,6 @@ public class SQLConstructor {
             Data d = data.get(i);
             setStatements[i] = join(" ", d.getField(), "=", "?");
         }
-        System.out.println(Arrays.toString(setStatements));
         query.append(" SET " + join(", ", setStatements));
         query.append(" WHERE " + join(" AND ", parameterBuilder(Arrays.asList(parameters))));
         return query.toString();
