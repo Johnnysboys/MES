@@ -7,9 +7,12 @@ package head;
 
 import dao_mes.OrderDAO;
 import dto_mes.OrderDTO;
+
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import scadaConnection.RMIServer;
 
 /**
  *
@@ -17,9 +20,22 @@ import javafx.collections.ObservableList;
  */
 public class MESController {
 
+    private RMIServer rmi;
+
     public MESController() {
-        
+        try {
+            rmi = new RMIServer();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
     }
+
+    public RMIServer getRMI(){
+        return rmi;
+
+    }
+
     
     public ObservableList getERPOrderList(){
         ArrayList ERPArrayList = (ArrayList) OrderDAO.get().getAllOrders();
