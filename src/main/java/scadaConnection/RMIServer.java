@@ -1,4 +1,5 @@
 package scadaConnection;
+import GUI.GUIController;
 import dao_mes.OrderDAO;
 import dto_mes.OrderDTO;
 import dto.OrderINFO;
@@ -64,6 +65,7 @@ public class RMIServer extends AbstractMES {
         //method in the super class, AbstractMES, found in MESCADAPI.jar
         if(orderDTO.getStatus().equals(OrderStatus.UNSCHEDULED)){
             orderDTO.setStatus(OrderStatus.SCHEDULED);
+            GUIController.
             super.executeOrder(new OrderINFO(orderDTO.getArticleNumber(),orderDTO.getToBePlanted(),orderDTO.getOrderNumber()));
             orderDTO.setStatus(OrderStatus.IN_PRODUCTION);
         }
