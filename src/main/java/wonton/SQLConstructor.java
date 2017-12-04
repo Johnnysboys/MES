@@ -86,7 +86,8 @@ public class SQLConstructor {
                 join(",", attributes),
                 "FROM",
                 model.getTableName()));
-        query.append(" WHERE " + join(" AND ", parameterBuilder(parameters)));
+        if(parameters != null)
+            query.append(" WHERE " + join(" AND ", parameterBuilder(parameters)));
         query.append(";");
         return query.toString();
     }

@@ -66,13 +66,13 @@ public class OrderDAO {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         for (Row r:list){
             if(((String) r.get("production").getData()).equals(order.getOrderNumber())){
-                caller.update((Integer) r.get("id").getData(),
+                caller.update(
                         new ArrayList<Data>(){{
                             add(new Data<>("quantity",order.getQuantity()));
                             add(new Data<>("delivery",formatter.format(order.getOrderedFor())));
                             add(new Data<>("status",finalStatus));
                             //add(new Data<>("remainstatus",(order.getQuantity()-order.getAmountHarvested())));
-                        }});
+                        }},(Integer) r.get("id").getData());
             }
         }
         getAllOrders();

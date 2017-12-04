@@ -23,9 +23,7 @@ public class MES extends Application {
     @Override
     public void start(Stage stage) {
         try {
-            FXMLLoader loader = FXMLLoader.load(getClass().getResource("/fxml/FXMLDocument.fxml"));
-            Parent root = loader.load();
-            
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/FXMLDocument.fxml"));
             Scene scene = new Scene(root);
             
             stage.setScene(scene);

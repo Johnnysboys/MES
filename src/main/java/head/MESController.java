@@ -36,12 +36,6 @@ public class MESController {
         return ERPArticleNumbersList;
         
         }
-    public ObservableList getERPOrderNumber(){
-        ArrayList ERPArrayList = (ArrayList) OrderDAO.get().getAllOrderNumber();
-        ObservableList<OrderDTO> ERPOrderNumnerList = FXCollections.observableArrayList(ERPArrayList);
-        
-        return ERPOrderNumnerList;
-    }
     
     public ObservableList getERPQuantity(){
         ArrayList ERPArrayList = (ArrayList) OrderDAO.get().getAllQuantity();

@@ -54,7 +54,7 @@ public class ordersModel extends Model {
                 warehouse,
                 location,
                 serialNumber,
-                quatity,
+                quantity,
                 reportremainderasfinish,
                 delivery,
                 status,
