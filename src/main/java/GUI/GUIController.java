@@ -22,7 +22,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import scadaConnection.AlreadyExecutedException;
 import scadaConnection.ExceedsCapacityException;
 import scadaConnection.RMIServer;
 
@@ -36,7 +35,7 @@ public class GUIController implements Initializable {
     private Label label;
     MESController MESController = new MESController();
     @FXML
-    private static TableView<OrderDTO> OrderTable;
+    private TableView<OrderDTO> OrderTable;
     @FXML
     private Button updatebtn;
     @FXML
@@ -49,12 +48,12 @@ public class GUIController implements Initializable {
     private TableColumn<?, ?> OrderDonePane1;
     @FXML
     private TableView<?> ERPTable;
-    
+
     @FXML
     private ScrollPane LoggingText;
-    
 
-    
+
+
     private MESController mc = new MESController();
     
     @FXML
@@ -63,29 +62,40 @@ public class GUIController implements Initializable {
         
           }
     
-    private void handleExecute(ActionEvent event, RMIServer rmi) {
-
-        if (ExecuteOrder66.isPressed()) {
-            if (OrderTable.getSelectionModel().getSelectedItem().equals(null)) {
-                //handle if null
-
-            } else {
-                try {
-                    rmi.executeOrder(OrderTable.getSelectionModel().getSelectedItem());
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                } catch (ExceedsCapacityException e) {
-                    e.printStackTrace();
-                } catch (AlreadyExecutedException e) {
-                    e.printStackTrace();
-                }
-
+    private void handleExecute(ActionEvent event, RMIServer rmi, MESController mc){
+        if (ExecuteOrder66.isPressed()){
+            if(OrderTable.getSelectionModel().getSelectedItem().equals(null)){
+                //Asd
+            }else{
             }
 
 
-        }
-    }
 
+           rmi.executeOrder(Order);
+
+
+        }
+
+        while(mc.getERPOrderList().iterator().hasNext()){
+            try {
+                mc.getOrderList().add(mc.getERPOrderList().size()-1);
+
+                int orderPlace = mc.getERPOrderList().size()-1;
+                int orderObject = mc.getERPOrderList().indexOf(orderPlace);
+
+                try {
+                    rmi.executeOrder((OrderDTO) mc.getERPOrderList().get(orderObject));
+                } catch (ExceedsCapacityException ex) {
+                    Logger.getLogger(GUIController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } catch (RemoteException ex) {
+                Logger.getLogger(GUIController.class.getName()).log(Level.SEVERE, null, ex);
+
+            }
+        }
+
+
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
