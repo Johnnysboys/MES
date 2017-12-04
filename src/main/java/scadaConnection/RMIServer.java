@@ -33,8 +33,9 @@ public class RMIServer extends AbstractMES {
         //It is possible that the rmi server starts threads implicitly, but it should always start a new thread.
         new Thread(()->{
             System.out.println("Alert planted was registered.");
-            OrderDAO.get().getOrder(orderID).addPlanted(1);
-            OrderDAO.get().updateOrder(OrderDAO.get().getOrder(orderID));
+            OrderDTO temp =OrderDAO.get().getOrder(orderID);
+            temp.addPlanted(1);
+            OrderDAO.get().updateOrder(temp);
             System.out.println("Order updated after alert planted.");
         }).start();
     }
@@ -47,8 +48,9 @@ public class RMIServer extends AbstractMES {
     public void alertDiscarded(String orderID) throws RemoteException {
         new Thread(() -> {
             System.out.println("alertDiscarded was registered.");
-                OrderDAO.get().getOrder(orderID).addDiscarded(1);
-                OrderDAO.get().updateOrder(OrderDAO.get().getOrder(orderID));
+                OrderDTO temp =OrderDAO.get().getOrder(orderID);
+                temp.addDiscarded(1);
+                OrderDAO.get().updateOrder(temp);
             System.out.println("Order updated after discarded was registered.");
         }).start();
     }
@@ -60,8 +62,9 @@ public class RMIServer extends AbstractMES {
     public void alertHarvest(String orderID) throws RemoteException {
         new Thread(()-> {
             System.out.println("alertHarvesting was registered.");
-            OrderDAO.get().getOrder(orderID).addHarvested(1);
-            OrderDAO.get().updateOrder(OrderDAO.get().getOrder(orderID));
+            OrderDTO temp=OrderDAO.get().getOrder(orderID);
+            temp.addHarvested(1);
+            OrderDAO.get().updateOrder(temp);
             System.out.println("Order has been updated after harvesting.");
         }).start();
     }
