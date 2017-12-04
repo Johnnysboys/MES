@@ -60,14 +60,17 @@ public class RMIServer extends AbstractMES {
         }).start();
     }
 
-    public void executeOrder(OrderDTO orderDTO) throws RemoteException, ExceedsCapacityException {
+    public void executeOrder(OrderDTO orderDTO) throws RemoteException, ExceedsCapacityException, AlreadyExecutedException {
         //Method evaluates which status the order is in, and if it is to be executed, it executes it using the
         //method in the super class, AbstractMES, found in MESCADAPI.jar
         if(orderDTO.getStatus().equals(OrderStatus.UNSCHEDULED)){
             orderDTO.setStatus(OrderStatus.SCHEDULED);
-            GUIController.
+            GUIController.updateGui();
             super.executeOrder(new OrderINFO(orderDTO.getArticleNumber(),orderDTO.getToBePlanted(),orderDTO.getOrderNumber()));
             orderDTO.setStatus(OrderStatus.IN_PRODUCTION);
+            GUIController.updateGui();
+        }else{
+            throw new AlreadyExecutedException("Order ID: "+orderDTO.getOrderNumber()+" is already executed.");
         }
     }
 }

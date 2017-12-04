@@ -35,7 +35,7 @@ public class GUIController implements Initializable {
     private Label label;
     MESController MESController = new MESController();
     @FXML
-    private TableView<OrderDTO> OrderTable;
+    private static TableView<OrderDTO> OrderTable;
     @FXML
     private Button updatebtn;
     @FXML
@@ -56,7 +56,7 @@ public class GUIController implements Initializable {
     
     private MESController mc = new MESController();
 
-    public void updateGui(){
+    public static synchronized void updateGui(){
         OrderTable.refresh();
     }
     

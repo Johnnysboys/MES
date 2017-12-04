@@ -1,4 +1,5 @@
 package dao_mes;
+import GUI.GUIController;
 import dto_mes.OrderDTO;
 
 import java.sql.Date;
@@ -76,6 +77,7 @@ public class OrderDAO {
             }
         }
         getAllOrders();
+        GUIController.updateGui();
     }
 
     public List<OrderDTO> getAllOrders() {
