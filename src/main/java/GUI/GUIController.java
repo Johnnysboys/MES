@@ -55,10 +55,6 @@ public class GUIController implements Initializable {
 
     
     private MESController mc = new MESController();
-
-    public static synchronized void updateGui(){
-        OrderTable.refresh();
-    }
     
     @FXML
     private void update(ActionEvent event){

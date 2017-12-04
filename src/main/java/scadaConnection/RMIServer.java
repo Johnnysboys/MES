@@ -65,10 +65,8 @@ public class RMIServer extends AbstractMES {
         //method in the super class, AbstractMES, found in MESCADAPI.jar
         if(orderDTO.getStatus().equals(OrderStatus.UNSCHEDULED)){
             orderDTO.setStatus(OrderStatus.SCHEDULED);
-            GUIController.updateGui();
             super.executeOrder(new OrderINFO(orderDTO.getArticleNumber(),orderDTO.getToBePlanted(),orderDTO.getOrderNumber()));
             orderDTO.setStatus(OrderStatus.IN_PRODUCTION);
-            GUIController.updateGui();
         }else{
             throw new AlreadyExecutedException("Order ID: "+orderDTO.getOrderNumber()+" is already executed.");
         }

@@ -77,7 +77,6 @@ public class OrderDAO {
             }
         }
         getAllOrders();
-        GUIController.updateGui();
     }
 
     public List<OrderDTO> getAllOrders() {
