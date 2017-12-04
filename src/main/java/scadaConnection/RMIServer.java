@@ -15,7 +15,13 @@ public class RMIServer extends AbstractMES {
     public RMIServer() throws RemoteException {
         super();
         //Uses shared constants from the MESCADAPI.jar library.
-        Registry registry = LocateRegistry.createRegistry(RMI_Constants.MES_PORT);
+        Registry registry;
+        try{
+            registry=LocateRegistry.getRegistry(RMI_Constants.MES_PORT);
+
+        }catch(Exception e){
+            registry = LocateRegistry.createRegistry(RMI_Constants.MES_PORT);
+        }
         System.out.println("Registry created.");
         registry.rebind(RMI_Constants.MES_OBJECTNAME, this);
         System.out.println("Server was bound.");
