@@ -154,4 +154,8 @@ public class OrderDAO {
 
     }
     
+    public  Wonton getWonton(){
+        return this.wonton;
+    }
+    
 }

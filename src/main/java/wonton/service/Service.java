@@ -55,7 +55,7 @@ public class Service implements IService {
         try {
             this.model.validateData(data);
             String query = SQLConstructor.update(model, data, id);
-            System.out.println(query);
+//            System.out.println(query);
             this.connection.queryData(query, data);
             return true;
         } catch (DoesNotExistsInModelException e) {
@@ -69,7 +69,7 @@ public class Service implements IService {
         try {
             this.model.validateData(data);
             String query = SQLConstructor.update(model, data, parameters);
-            System.out.println(query);
+//            System.out.println(query);
             this.connection.queryData(query, data);
             return true;
         } catch (DoesNotExistsInModelException e) {
@@ -79,6 +79,8 @@ public class Service implements IService {
         }
         return false;
     }
+    
+    
 
 
     @Override

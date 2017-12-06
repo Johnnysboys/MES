@@ -27,7 +27,6 @@
             <artifactId>postgresql</artifactId>
             <version>42.1.4</version>
         </dependency>
-
         <dependency>
             <groupId>mes</groupId>
             <artifactId>MESCADAPI</artifactId>
@@ -35,9 +34,5 @@
             <scope>system</scope>
             <systemPath>${basedir}/MESCADAPI.jar</systemPath>
         </dependency>
-
     </dependencies>
-
-
-    
 </project>

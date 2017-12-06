@@ -1,6 +1,7 @@
+package loggingConnector;
 
 
-import dbConnector.*;
+
 
 public abstract class Constant {
     //public static final String user = "TEK\\TEK-AX09-075";

@@ -1,5 +1,6 @@
 package wonton;
 
+import java.sql.Date;
 import wonton.types.Operators;
 
 public class Parameter<T> {
@@ -28,9 +29,11 @@ public class Parameter<T> {
     @Override
     public String toString() {
         String dataString = this.data.toString();
-        if (this.data instanceof String){
+        if (this.data instanceof String)
             dataString = "'" + dataString + "'";
-        }
+        if (this.data instanceof Date)
+            dataString = "'" + dataString + "'";
+        
         return String.join(" ", this.column, this.operator.toString(), dataString);
     }
 }

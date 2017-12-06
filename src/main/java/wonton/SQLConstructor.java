@@ -130,7 +130,7 @@ public class SQLConstructor {
         query.append(join(" ", Statements.UPDATE.toString(), model.getTableName()));
         String[] setStatements = new String[data.size()];
         for(int i = 0; i < data.size(); i++){
-            System.out.println(data.get(i));
+            //System.out.println(data.get(i));
             Data d = data.get(i);
             setStatements[i] = join(" ", d.getField(), "=", "?");
         }
