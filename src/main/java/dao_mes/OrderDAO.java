@@ -1,4 +1,5 @@
 package dao_mes;
+import GUI.GUIController;
 import dto_mes.OrderDTO;
 
 import java.sql.Date;
@@ -72,8 +73,7 @@ public class OrderDAO {
                             add(new Data<>("delivery",formatter.format(order.getOrderedFor())));
                             add(new Data<>("status",finalStatus));
                             //add(new Data<>("remainstatus",(order.getQuantity()-order.getAmountHarvested())));
-                        }}
-                ,(Integer) r.get("id").getData());
+                        }},(Integer) r.get("id").getData());
             }
         }
         getAllOrders();
