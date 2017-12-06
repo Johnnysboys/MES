@@ -8,16 +8,13 @@ package GUI;
 import dto_mes.OrderDTO;
 import java.net.URL;
 import java.rmi.RemoteException;
+import java.sql.Date;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
 import scadaConnection.AlreadyExecutedException;
 import scadaConnection.ExceedsCapacityException;
 
@@ -28,7 +25,18 @@ import javax.swing.*;
  * @author Troels
  */
 public class GUIController implements Initializable {
-    
+
+
+    @FXML
+    private Button searchLog;
+    @FXML
+    private TextField loggerText;
+    @FXML
+    private TextField searchArticle;
+    @FXML
+    private DatePicker startDate;
+    @FXML
+    private DatePicker endDate;
     @FXML
     private Label label;
     MESController MESController = new MESController();
@@ -115,5 +123,24 @@ public class GUIController implements Initializable {
 
     }
 
+
+    @FXML
+    public void handleSearchArticle(ActionEvent actionEvent){
+
+
+        Date choosenStartDate = Date.valueOf(startDate.getValue());
+        Date choosenEndDate = Date.valueOf(endDate.getValue());
+        String choosenArticle = searchArticle.getText();
+
+         double choosenDiscardRatio = mc.OrderLogger().getDiscardedRatio(choosenStartDate, choosenEndDate, choosenArticle);
+         int choosenAvergaOrderDelay = mc.OrderLogger().getAverageOrderDelay(choosenStartDate, choosenEndDate);
+         int choosenAverageGrowTime = mc.OrderLogger().getAverageGrowTime(choosenStartDate, choosenEndDate, choosenArticle);
+
+         loggerText.setText("DiscardRatio:" + choosenDiscardRatio + "\n Average order delay:" + choosenAvergaOrderDelay + "\n Average growtime" + choosenAverageGrowTime);
+
+
+
     }
+
+}
 

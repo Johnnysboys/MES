@@ -35,7 +35,7 @@ public class OrderLogger {
             instance= new OrderLogger();
         return instance;
     }
-    private OrderLogger(){
+    public OrderLogger(){
         this.logModel = new LogModel();
         logService = OrderDAO.get().getWonton().createService(logModel);
     }
@@ -55,7 +55,10 @@ public class OrderLogger {
             add(new Data<>("amount_planted", 0));  
         }});
     }
-    
+
+    //Use this for GUI
+    //Returns how much there has been discarded
+    //Gange med 100 hvis jeg vil have den som %
     public double getDiscardedRatio(Date from, Date to, String article)  {
         try{
         int totalPlanted = 0;
@@ -86,7 +89,8 @@ public class OrderLogger {
 
     
     
-    
+    //Returner et gennemsnit for hvem meget vi returnere ved siden af kundens ønske
+    //No article in this method
     public int getAverageOrderDelay(Date from, Date to){
         try{
         int delayed = 0;
@@ -121,7 +125,8 @@ public class OrderLogger {
         return -1;
         
     }
-    
+
+    //Gennemsnit af dyrkning af en specifik artikel
     public int getAverageGrowTime(Date from, Date to, String article) {
         Parameter fromParameter = new Parameter("ordered_for", Operators.GTE, from);
         Parameter toParameter = new Parameter("ordered_for", Operators.LTE, to);

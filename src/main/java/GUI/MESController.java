@@ -12,6 +12,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import loggingConnector.OrderLogger;
 import scadaConnection.RMIServer;
 
 /**
@@ -21,8 +22,12 @@ import scadaConnection.RMIServer;
 public class MESController {
 
     private RMIServer rmi;
+    private OrderLogger logger;
 
     public MESController() {
+
+        logger = new OrderLogger();
+
         try {
             rmi = new RMIServer();
         } catch (RemoteException e) {
@@ -34,6 +39,10 @@ public class MESController {
     public RMIServer getRMI(){
         return rmi;
 
+    }
+
+    public OrderLogger OrderLogger(){
+        return logger;
     }
 
 
