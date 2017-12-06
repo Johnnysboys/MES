@@ -6,6 +6,7 @@
 package dto_mes;
 
 import com.sun.org.apache.xpath.internal.operations.Or;
+import loggingConnector.OrderLogger;
 
 import java.util.Date;
 
@@ -90,7 +91,9 @@ public OrderDTO(String orderNumber, String articleNumber, int quantity, Date ord
     }
 
     public void setStatus(OrderStatus status) {
+
         this.status = status;
+        OrderLogger.get().changeStatus(orderNumber,status);
     }
 
     public Date getDatePlanted() {
@@ -115,6 +118,7 @@ public OrderDTO(String orderNumber, String articleNumber, int quantity, Date ord
 
     public void addDiscarded(int amountDiscarded) {
         this.amountDiscarded += amountDiscarded;
+        OrderLogger.get().setDiscarded(orderNumber,this.amountDiscarded);
     }
 
     public int getAmountPlanted() {
@@ -123,6 +127,10 @@ public OrderDTO(String orderNumber, String articleNumber, int quantity, Date ord
 
     public void addPlanted(int amountPlanted) {
         this.amountPlanted += amountPlanted;
+        if(this.amountPlanted>=quantity){
+            OrderLogger.get().setDatePlanted(this.orderNumber,new java.sql.Date(new Date().getTime()));
+        }
+        OrderLogger.get().setAmountPlanted(orderNumber,this.amountPlanted);
     }
 
     public int getAmountHarvested() {
@@ -136,6 +144,7 @@ public OrderDTO(String orderNumber, String articleNumber, int quantity, Date ord
             this.amountHarvested += amountHarvested;
         if (amountHarvested>=quantity){
             this.status=OrderStatus.DELIVERED;
+            OrderLogger.get().setDateHarvested(orderNumber,new java.sql.Date(new Date().getTime()));
             System.out.println("Order has been finished, status set to delivered.");
         }
     }

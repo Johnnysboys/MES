@@ -25,11 +25,17 @@ import wonton.types.Operators;
  * @author Troels
  */
 public class OrderLogger {
-    
-    Service logService;
-    Model logModel;
-    
-    public OrderLogger(){
+
+    private static OrderLogger instance=null;
+    private Service logService;
+    private Model logModel;
+
+    public static synchronized OrderLogger get(){
+        if(instance==null)
+            instance= new OrderLogger();
+        return instance;
+    }
+    private OrderLogger(){
         this.logModel = new LogModel();
         logService = OrderDAO.get().getWonton().createService(logModel);
     }
@@ -163,7 +169,7 @@ public class OrderLogger {
         ArrayList<Data> dataList = new ArrayList();
         Data data = new Data<>("date_harvested", dateHarvested);
         dataList.add(data);
-        logService.update(dataList, param);  
+        logService.update(dataList, param);
     }
     
     
@@ -192,12 +198,4 @@ public class OrderLogger {
         dataList.add(data);
         logService.update(dataList,param);
     }
-    
- 
-    
-    
-    
-    
-    
-    
 }

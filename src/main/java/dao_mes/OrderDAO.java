@@ -8,6 +8,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.*;
+
+import loggingConnector.OrderLogger;
 import models.ordersModel;
 import wonton.Data;
 import wonton.Row;
@@ -95,7 +97,14 @@ public class OrderDAO {
                             new OrderDTO((String) r.get("production").getData(),
                             r.get("itemnumber").getData().toString(),
                             Integer.valueOf(r.get("quantity").getData().toString().split("\\.")[0]),
-                            formatter.parse(r.get("delivery").getData().toString()))
+                            formatter.parse(r.get("delivery").getData().toString())){{
+                                OrderLogger.get().addOrder(this.getOrderNumber(),
+                                        this.getArticleNumber(),
+                                        this.getStatus(),
+                                        this.getQuantity(),
+                                        new java.sql.Date(this.getOrderedFor().getTime()),
+                                        new java.sql.Date(this.getToBeDeliveredOn().getTime()));
+                            }}
                     );
                     //{{
                   //  this.addHarvested(Integer.valueOf(r.get("remainstatus").getData().toString()));
