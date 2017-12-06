@@ -1,6 +1,7 @@
+package loggingConnector;
 
 
-import dbConnector.*;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

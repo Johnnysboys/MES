@@ -1,8 +1,10 @@
 package wonton.types;
 
 public enum Operators {
-    GT("<"),
-    LT(">"),
+    GT(">"),
+    LT("<"),
+    GTE(">="),
+    LTE("<="),
     EQ("=");
 
     private final String operator;
