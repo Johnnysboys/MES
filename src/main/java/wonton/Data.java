@@ -9,14 +9,17 @@ public class Data<T> {
         this.data = data;
     }
 
-
-
     public String getField() {
         return this.field;
     }
+
     public T getData() {
-        return data;
+        return this.data;
     }
 
+    @Override
+    public String toString(){
+        return "" + this.data;
+    }
 
 }
