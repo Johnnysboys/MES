@@ -49,10 +49,7 @@ public OrderDTO(String orderNumber, String articleNumber, int quantity, Date ord
     this.status = OrderStatus.UNSCHEDULED;
     this.amountHarvested=quantity-remaining;
 }
-
-    public OrderDTO() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 
     public String getOrderNumber() {
         return orderNumber;
