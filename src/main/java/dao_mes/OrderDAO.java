@@ -82,7 +82,6 @@ public class OrderDAO {
     }
 
     public List<OrderDTO> getAllOrders() {
-        System.out.println("Getting all orders");
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         if(orders==null)
             orders=new HashMap<>();
@@ -112,9 +111,8 @@ public class OrderDAO {
                 }
             }
         }catch (ParseException e){
-            e.printStackTrace();
+            System.out.println("Error parsing Order parameters in getAllOrders method in OrderDAO");
         }
-        System.out.println("Returning list of orders to Server");
         return new ArrayList<>(orders.values());
     }
     
@@ -127,7 +125,8 @@ public class OrderDAO {
                 reslist.add((Integer) r.get(0).getData());
             }
         } catch (DoesNotExistsInModelException e) {
-            e.printStackTrace();
+            System.out.println("Column 'itemnumber' does not exist in model");
+            System.out.println(e);
         }
         return reslist;
         
@@ -142,7 +141,8 @@ public class OrderDAO {
               reslist.add((String) r.get(0).getData());
           }
       } catch (DoesNotExistsInModelException e) {
-          e.printStackTrace();
+          System.out.println("Column 'production' does not exist in model");
+          System.out.println(e);
       }
       return reslist;
         
@@ -157,10 +157,9 @@ public class OrderDAO {
                 reslist.add((Integer) r.get(0).getData());
             }
         } catch (DoesNotExistsInModelException e) {
-            e.printStackTrace();
+            System.out.println("Column 'quantity does not exist in model");
         }
         return reslist;
-
     }
     
     public  Wonton getWonton(){
