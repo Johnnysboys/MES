@@ -13,7 +13,7 @@ public class SQLConstructor {
         return insert(model, data, true);
     }
 
-    public static String insert(Model model, List<Data> data, Boolean returnId) throws Exception {
+    public static  synchronized String insert(Model model, List<Data> data, Boolean returnId) throws Exception {
         StringBuilder query = new StringBuilder();
         int numOfData = data.size();
         String[] fields = new String[numOfData];
@@ -35,7 +35,7 @@ public class SQLConstructor {
         return query.toString();
     }
 
-    public static String createTable(Model model) {
+    public static  synchronized String createTable(Model model) {
         StringBuilder query = new StringBuilder();
         query.append(join(" ",
                 Statements.CREATE.toString(),
@@ -45,14 +45,14 @@ public class SQLConstructor {
         return query.toString();
     }
 
-    private static String constructTableFromModel(Model model){
+    private static  synchronized String constructTableFromModel(Model model){
         StringBuilder sql = new StringBuilder();
         String[] fields = constructFields(model.getDefinitions(), model);
         sql.append(model.getTableName() + " (" + join(",",fields) + ")");
         return sql.toString();
     }
 
-    private static String[] constructFields(ArrayList<Definition> definitions, Model model){
+    private static  synchronized String[] constructFields(ArrayList<Definition> definitions, Model model){
         String[] fields = new String[model.countFields()];
         int index = 0;
         for(Definition definition : definitions){
@@ -79,7 +79,7 @@ public class SQLConstructor {
         }
         return fields;
     }
-    private static String selectQuery(Model model, String[] attributes, List<Parameter> parameters){
+    private static  synchronized String selectQuery(Model model, String[] attributes, List<Parameter> parameters){
         StringBuilder query = new StringBuilder();
         query.append(join(" ",
                 Statements.SELECT.toString(),
@@ -92,28 +92,28 @@ public class SQLConstructor {
         return query.toString();
     }
 
-    public static String select(Model model){
+    public static  synchronized String select(Model model){
         return select(model, "*");
     }
 
-    public static String select(Model model, List<Parameter> parameters){
+    public static  synchronized String select(Model model, List<Parameter> parameters){
         return selectQuery(model, new String[]{"*"}, parameters);
     }
 
-    public static String select(Model model, Parameter... parameters){
+    public static  synchronized String select(Model model, Parameter... parameters){
         return selectQuery(model, new String[]{"*"}, Arrays.asList(parameters));
     }
-    public static String select(Model model, String... attributes){
+    public static  synchronized String select(Model model, String... attributes){
         return selectQuery(model, attributes, null);
     }
 
-    public static String delete(Model model, int id){
+    public static  synchronized String delete(Model model, int id){
         StringBuilder query = new StringBuilder();
         query.append(join(" ", Statements.DELETE.toString(), "FROM", model.getTableName(), "WHERE id = " + id + ";"));
         return query.toString();
     }
 
-    public static String update(Model model, List<Data> data, int id){
+    public static  synchronized String update(Model model, List<Data> data, int id){
         StringBuilder query = new StringBuilder();
         query.append(join(" ", Statements.UPDATE.toString(), model.getTableName()));
         String[] setStatements = new String[data.size()];
@@ -125,7 +125,7 @@ public class SQLConstructor {
         query.append(" WHERE id = " + id + ";");
         return query.toString();
     }
-    public static String update(Model model, List<Data> data, Parameter... parameters){
+    public static synchronized String update(Model model, List<Data> data, Parameter... parameters){
         StringBuilder query = new StringBuilder();
         query.append(join(" ", Statements.UPDATE.toString(), model.getTableName()));
         String[] setStatements = new String[data.size()];
@@ -139,7 +139,7 @@ public class SQLConstructor {
         return query.toString();
     }
 
-    private static String[] parameterBuilder(List<Parameter> parameters){
+    private static synchronized  String[] parameterBuilder(List<Parameter> parameters){
         if(parameters != null && parameters.size() > 0){
             String[] parameterString = new String[parameters.size()];
             for(int i = 0; i < parameters.size(); i++) {

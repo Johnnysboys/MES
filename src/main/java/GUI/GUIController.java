@@ -133,7 +133,7 @@ public class GUIController implements Initializable {
         String choosenArticle = searchArticle.getText();
 
          double choosenDiscardRatio = mc.OrderLogger().getDiscardedRatio(choosenStartDate, choosenEndDate, choosenArticle);
-         int choosenAvergaOrderDelay = mc.OrderLogger().getAverageOrderDelay(choosenStartDate, choosenEndDate);
+         int choosenAvergaOrderDelay = mc.OrderLogger().getAverageDeliveryDeviation(choosenStartDate, choosenEndDate);
          int choosenAverageGrowTime = mc.OrderLogger().getAverageGrowTime(choosenStartDate, choosenEndDate, choosenArticle);
 
          loggerText.setText("DiscardRatio:" + choosenDiscardRatio + "\n Average order delay:" + choosenAvergaOrderDelay + "\n Average growtime" + choosenAverageGrowTime);
