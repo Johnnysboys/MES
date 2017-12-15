@@ -22,27 +22,28 @@ public class OrderDAO {
 
     private Wonton wonton;
     private Service caller;
-    private static OrderDAO instance;
     private Map<String,OrderDTO> orders;
-
+    private static OrderDAO instance;
     public static synchronized OrderDAO get(){
         if(instance==null)
             instance=new OrderDAO();
-        System.out.println("Returning OrderDAO");
         return instance;
     }
 
     private OrderDAO(){
         try {
-            System.out.println("Created OrderDAO");
-            wonton = new Wonton(new PGConnection("admin_dhk", "admin_dhk", "code1234", "51.254.143.91"));
+            wonton = new Wonton(
+                    new PGConnection("admin_dhk",
+                            "admin_dhk",
+                            "code1234",
+                            "51.254.143.91"));
             caller = wonton.createService(new ordersModel());
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public OrderDTO getOrder(String orderID) {
+    public synchronized OrderDTO getOrder(String orderID) {
         if(orders.containsKey(orderID))
             return orders.get(orderID);
         getAllOrders();
@@ -50,7 +51,7 @@ public class OrderDAO {
     }
 
 
-    public void updateOrder(OrderDTO order) {
+    public synchronized void updateOrder(OrderDTO order) {
         String tempStatus=null;
         switch(order.getStatus()){
             case SCHEDULED:
@@ -81,7 +82,7 @@ public class OrderDAO {
         getAllOrders();
     }
 
-    public List<OrderDTO> getAllOrders() {
+    public synchronized List<OrderDTO> getAllOrders() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         if(orders==null)
             orders=new HashMap<>();
@@ -116,7 +117,7 @@ public class OrderDAO {
         return new ArrayList<>(orders.values());
     }
     
-    public ArrayList getAllArticleNumber(){
+    public synchronized ArrayList getAllArticleNumber(){
         ArrayList<Integer> reslist= new ArrayList<>();
         List<Row> list;
         try {
@@ -132,7 +133,7 @@ public class OrderDAO {
         
     }
     
-    public ArrayList getAllOrderNumber(){
+    public synchronized ArrayList getAllOrderNumber(){
       ArrayList<String> reslist= new ArrayList<>();
       List<Row> list;
       try {
@@ -148,7 +149,7 @@ public class OrderDAO {
         
     }
       
-    public ArrayList getAllQuantity(){
+    public synchronized ArrayList getAllQuantity(){
         ArrayList<Integer> reslist= new ArrayList<>();
         List<Row> list;
         try {
@@ -162,7 +163,7 @@ public class OrderDAO {
         return reslist;
     }
     
-    public  Wonton getWonton(){
+    public synchronized Wonton getWonton(){
         return this.wonton;
     }
     
