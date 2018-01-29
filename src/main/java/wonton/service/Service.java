@@ -111,7 +111,7 @@ public class Service implements IService {
     public List<Row> find(Parameter... parameter) throws DoesNotExistsInModelException {
         try{
             String query = SQLConstructor.select(this.model, parameter);
-            System.out.println(query);
+//            System.out.println(query);
             return this.connection.queryModel(query, this.model);
         } catch (Exception e){
             e.printStackTrace();
