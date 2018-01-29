@@ -22,7 +22,7 @@ public class OrderDAO {
 
     private Wonton wonton;
     private Service caller;
-    private Map<String,OrderDTO> orders;
+    private Map<String,OrderDTO> orders= new HashMap<>();
     private static OrderDAO instance;
     public static synchronized OrderDAO get(){
         if(instance==null)
@@ -80,13 +80,13 @@ public class OrderDAO {
             }
         }
         getAllOrders();
+        orders.get(order.getOrderNumber()).addHarvested(order.getAmountHarvested());
+        orders.get(order.getOrderNumber()).addDiscarded(order.getAmountDiscarded());
+        orders.get(order.getOrderNumber()).addPlanted(order.getAmountPlanted());
     }
 
     public synchronized List<OrderDTO> getAllOrders() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-        if(orders==null)
-            orders=new HashMap<>();
-
         List<Row> list=caller.find();
         try {
             for (Row r : list) {

@@ -6,6 +6,7 @@ import dto.OrderINFO;
 import dto_mes.OrderStatus;
 import mes.RMI_Constants;
 
+import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -17,13 +18,15 @@ public class RMIServer extends AbstractMES {
         //Uses shared constants from the MESCADAPI.jar library.
         Registry registry;
         try{
-            registry=LocateRegistry.getRegistry(RMI_Constants.MES_PORT);
-
-        }catch(Exception e){
             registry = LocateRegistry.createRegistry(RMI_Constants.MES_PORT);
+        }catch(Exception e){
+            registry=LocateRegistry.getRegistry(RMI_Constants.MES_PORT);
         }
         System.out.println("Registry created.");
-        registry.rebind(RMI_Constants.MES_OBJECTNAME, this);
+
+            registry.rebind(RMI_Constants.MES_OBJECTNAME, this);
+
+
         System.out.println("Server was bound.");
     }
 
