@@ -30,7 +30,7 @@ public class GUIController implements Initializable {
     @FXML
     private Button searchLog;
     @FXML
-    private TextField loggerText;
+    private TextArea loggerText;
     @FXML
     private TextField searchArticle;
     @FXML
@@ -39,7 +39,6 @@ public class GUIController implements Initializable {
     private DatePicker endDate;
     @FXML
     private Label label;
-    MESController MESController = new MESController();
     @FXML
     private TableView<OrderDTO> OrderTable;
     @FXML
@@ -92,12 +91,9 @@ public class GUIController implements Initializable {
         orderIDCol.setMinWidth(200);
         OrderTable.getColumns().addAll(orderIDCol, articleNumberCol, quantityCol, statusCol );
         OrderTable.setItems(mc.getOrderList());
-
-        
-        
-        
-
     }
+
+
 
 
     public void handleExecute(ActionEvent actionEvent) {
@@ -132,11 +128,11 @@ public class GUIController implements Initializable {
         Date choosenEndDate = Date.valueOf(endDate.getValue());
         String choosenArticle = searchArticle.getText();
 
-         double choosenDiscardRatio = mc.OrderLogger().getDiscardedRatio(choosenStartDate, choosenEndDate, choosenArticle);
-         int choosenAvergaOrderDelay = mc.OrderLogger().getAverageOrderDelay(choosenStartDate, choosenEndDate);
-         int choosenAverageGrowTime = mc.OrderLogger().getAverageGrowTime(choosenStartDate, choosenEndDate, choosenArticle);
+        double choosenDiscardRatio = mc.OrderLogger().getDiscardedRatio(choosenStartDate, choosenEndDate, choosenArticle);
+        double choosenAvergaOrderDelay = mc.OrderLogger().getAverageOrderDelay(choosenStartDate, choosenEndDate);
+        double choosenAverageGrowTime = mc.OrderLogger().getAverageGrowTime(choosenStartDate, choosenEndDate, choosenArticle);
 
-         loggerText.setText("DiscardRatio:" + choosenDiscardRatio + "\n Average order delay:" + choosenAvergaOrderDelay + "\n Average growtime" + choosenAverageGrowTime);
+         loggerText.setText("DiscardRatio: " + choosenDiscardRatio + "\nAverage order delay: " + choosenAvergaOrderDelay + "% \nAverage growtime: " + choosenAverageGrowTime);
 
 
 
