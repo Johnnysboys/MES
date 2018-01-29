@@ -1,5 +1,4 @@
 package scadaConnection;
-import GUI.GUIController;
 import dao_mes.OrderDAO;
 import dto_mes.OrderDTO;
 import dto.OrderINFO;
@@ -17,10 +16,10 @@ public class RMIServer extends AbstractMES {
         //Uses shared constants from the MESCADAPI.jar library.
         Registry registry;
         try{
-            registry=LocateRegistry.getRegistry(RMI_Constants.MES_PORT);
+            registry = LocateRegistry.createRegistry(RMI_Constants.MES_PORT);
 
         }catch(Exception e){
-            registry = LocateRegistry.createRegistry(RMI_Constants.MES_PORT);
+            registry=LocateRegistry.getRegistry(RMI_Constants.MES_PORT);
         }
         System.out.println("Registry created.");
         registry.rebind(RMI_Constants.MES_OBJECTNAME, this);
