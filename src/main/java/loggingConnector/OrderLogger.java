@@ -61,20 +61,25 @@ public class OrderLogger {
     //Gange med 100 hvis jeg vil have den som %
     public double getDiscardedRatio(Date from, Date to, String article)  {
         try{
-        int totalPlanted = 0;
-        int totalDiscarded = 0;
-        Parameter articleParameter = new Parameter("article_number", Operators.EQ, article);
-        Parameter fromParameter = new Parameter("ordered_for", Operators.GT, from);
-        Parameter toParameter = new Parameter("ordered_for", Operators.LT, to);
-        ArrayList<Row> rowList = (ArrayList) logService.find(articleParameter, fromParameter, toParameter);
+            int totalPlanted = 0;
+            int totalDiscarded = 0;
+            Parameter articleParameter = new Parameter("article_number", Operators.EQ, article);
+            Parameter fromParameter = new Parameter("ordered_for", Operators.GT, from);
+            Parameter toParameter = new Parameter("ordered_for", Operators.LT, to);
+            ArrayList<Row> rowList = (ArrayList) logService.find(articleParameter, fromParameter, toParameter);
 
-        for (Row r : rowList) {
-            totalPlanted += (int) r.get(11).getData();
-            totalDiscarded += (int) r.get(12).getData();
-        }
-        
-        double toReturn = (double)totalDiscarded / (double)totalPlanted;
-        return toReturn;
+            for (Row r : rowList) {
+                if( r.get(11).getData() != null) {
+                    totalPlanted    += (int) r.get(11).getData();
+                }
+                if(r.get(12).getData() != null) {
+                    totalDiscarded  += (int) r.get(12).getData();
+                }
+            }
+
+            if(totalDiscarded <= 0 || totalPlanted <= 0) return -1;
+
+            return (double) totalDiscarded / (double) totalPlanted;
         }
      
         
@@ -91,29 +96,31 @@ public class OrderLogger {
     
     //Returner et gennemsnit for hvem meget vi returnere ved siden af kundens ønske
     //No article in this method
-    public int getAverageOrderDelay(Date from, Date to){
+    public double getAverageOrderDelay(Date from, Date to){
         try{
-        int delayed = 0;
-        int numberOfOrders = 0;
-        
-     
-        Parameter fromParameter = new Parameter("ordered_for", Operators.GTE, from);
-        Parameter toParameter = new Parameter("ordered_for", Operators.LTE, to);
-        ArrayList<Row> rowList = (ArrayList<Row>) logService.find(fromParameter, toParameter);
-        
-        for (Row r: rowList){
-            
-            Date orderedFor = (Date)r.get(6).getData();
-            Date deliveredOn = (Date)r.get(7).getData();
-            long difference = Math.abs(deliveredOn.getTime() - orderedFor.getTime()); 
-            delayed += (int)TimeUnit.MILLISECONDS.toDays(difference);
-            numberOfOrders ++;
-            System.out.println("Orders: " + numberOfOrders);
-            System.out.println("Days: "+ delayed);
-        }
-            return delayed/numberOfOrders;
-        
- 
+            int delayed = 0;
+            int numberOfOrders = 0;
+
+
+            Parameter fromParameter = new Parameter("ordered_for", Operators.GTE, from);
+            Parameter toParameter = new Parameter("ordered_for", Operators.LTE, to);
+            ArrayList<Row> rowList = (ArrayList<Row>) logService.find(fromParameter, toParameter);
+
+            for (Row r: rowList){
+                // IF there is both dates in the database.
+                if(r.get(6).getData() != null && r.get(7).getData() != null) {
+                    Date orderedFor = (Date)r.get(6).getData();
+                    Date deliveredOn = (Date)r.get(7).getData();
+
+                    long difference = Math.abs(deliveredOn.getTime() - orderedFor.getTime());
+                    delayed += (int)TimeUnit.MILLISECONDS.toDays(difference);
+                    numberOfOrders ++;
+                }
+            }
+
+            if (delayed <= 0 || numberOfOrders <= 0) return -1;
+
+            return  (((double) delayed / (double) numberOfOrders) * 100);
         }
         catch(DoesNotExistsInModelException e){
                 e.printStackTrace();
@@ -127,7 +134,7 @@ public class OrderLogger {
     }
 
     //Gennemsnit af dyrkning af en specifik artikel
-    public int getAverageGrowTime(Date from, Date to, String article) {
+    public double getAverageGrowTime(Date from, Date to, String article) {
         Parameter fromParameter = new Parameter("ordered_for", Operators.GTE, from);
         Parameter toParameter = new Parameter("ordered_for", Operators.LTE, to);
         Parameter articleParameter = new Parameter("article_number", Operators.EQ, article);
@@ -136,16 +143,17 @@ public class OrderLogger {
 
         try {
             ArrayList<Row> rowList = new ArrayList(logService.find(fromParameter, toParameter, articleParameter));
-
             for (Row r : rowList) {
                 Date datePlanted = (Date) r.get("date_planted").getData();
                 Date dateHarvested = (Date) r.get("date_harvested").getData();
-                long difference = dateHarvested.getTime() - datePlanted.getTime();
-                daysOfGrowth += (int)TimeUnit.MILLISECONDS.toDays(difference);
+                if (datePlanted != null && dateHarvested != null) {
+                    long difference = dateHarvested.getTime() - datePlanted.getTime();
+                    daysOfGrowth += (int) TimeUnit.MILLISECONDS.toDays(difference);
+                }
                 numberOfOrders++;                                
             }
-            
-            return daysOfGrowth - numberOfOrders;
+            if(daysOfGrowth <= 0 || numberOfOrders <= 0) return -1;
+            return daysOfGrowth / numberOfOrders; //skulle have været dividere for at få det rigtige tal
         }
         
         catch(DoesNotExistsInModelException e){
@@ -197,7 +205,7 @@ public class OrderLogger {
     }
     
     public void setAmountPlanted(String orderId, int newAmount){
-        Parameter param = new Parameter(orderId, Operators.EQ, orderId);
+        Parameter param = new Parameter("order_id", Operators.EQ, orderId);
         ArrayList<Data> dataList = new ArrayList();
         Data data = new Data<> ("amount_planted", newAmount);
         dataList.add(data);
