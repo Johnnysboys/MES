@@ -22,27 +22,28 @@ public class OrderDAO {
 
     private Wonton wonton;
     private Service caller;
+    private Map<String,OrderDTO> orders= new HashMap<>();
     private static OrderDAO instance;
-    private Map<String,OrderDTO> orders;
-
     public static synchronized OrderDAO get(){
         if(instance==null)
             instance=new OrderDAO();
-        System.out.println("Returning OrderDAO");
         return instance;
     }
 
     private OrderDAO(){
         try {
-            System.out.println("Created OrderDAO");
-            wonton = new Wonton(new PGConnection("admin_dhk", "admin_dhk", "code1234", "51.254.143.91"));
+            wonton = new Wonton(
+                    new PGConnection("admin_dhk",
+                            "admin_dhk",
+                            "code1234",
+                            "51.254.143.91"));
             caller = wonton.createService(new ordersModel());
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public OrderDTO getOrder(String orderID) {
+    public synchronized OrderDTO getOrder(String orderID) {
         if(orders.containsKey(orderID))
             return orders.get(orderID);
         getAllOrders();
@@ -50,7 +51,7 @@ public class OrderDAO {
     }
 
 
-    public void updateOrder(OrderDTO order) {
+    public synchronized void updateOrder(OrderDTO order) {
         String tempStatus=null;
         switch(order.getStatus()){
             case SCHEDULED:
@@ -79,14 +80,13 @@ public class OrderDAO {
             }
         }
         getAllOrders();
+        orders.get(order.getOrderNumber()).addHarvested(order.getAmountHarvested());
+        orders.get(order.getOrderNumber()).addDiscarded(order.getAmountDiscarded());
+        orders.get(order.getOrderNumber()).addPlanted(order.getAmountPlanted());
     }
 
-    public List<OrderDTO> getAllOrders() {
-        System.out.println("Getting all orders");
+    public synchronized List<OrderDTO> getAllOrders() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-        if(orders==null)
-            orders=new HashMap<>();
-
         List<Row> list=caller.find();
         try {
             for (Row r : list) {
@@ -112,13 +112,12 @@ public class OrderDAO {
                 }
             }
         }catch (ParseException e){
-            e.printStackTrace();
+            System.out.println("Error parsing Order parameters in getAllOrders method in OrderDAO");
         }
-        System.out.println("Returning list of orders to Server");
         return new ArrayList<>(orders.values());
     }
     
-    public ArrayList getAllArticleNumber(){
+    public synchronized ArrayList getAllArticleNumber(){
         ArrayList<Integer> reslist= new ArrayList<>();
         List<Row> list;
         try {
@@ -127,13 +126,14 @@ public class OrderDAO {
                 reslist.add((Integer) r.get(0).getData());
             }
         } catch (DoesNotExistsInModelException e) {
-            e.printStackTrace();
+            System.out.println("Column 'itemnumber' does not exist in model");
+            System.out.println(e);
         }
         return reslist;
         
     }
     
-    public ArrayList getAllOrderNumber(){
+    public synchronized ArrayList getAllOrderNumber(){
       ArrayList<String> reslist= new ArrayList<>();
       List<Row> list;
       try {
@@ -142,13 +142,14 @@ public class OrderDAO {
               reslist.add((String) r.get(0).getData());
           }
       } catch (DoesNotExistsInModelException e) {
-          e.printStackTrace();
+          System.out.println("Column 'production' does not exist in model");
+          System.out.println(e);
       }
       return reslist;
         
     }
       
-    public ArrayList getAllQuantity(){
+    public synchronized ArrayList getAllQuantity(){
         ArrayList<Integer> reslist= new ArrayList<>();
         List<Row> list;
         try {
@@ -157,13 +158,12 @@ public class OrderDAO {
                 reslist.add((Integer) r.get(0).getData());
             }
         } catch (DoesNotExistsInModelException e) {
-            e.printStackTrace();
+            System.out.println("Column 'quantity does not exist in model");
         }
         return reslist;
-
     }
     
-    public  Wonton getWonton(){
+    public synchronized Wonton getWonton(){
         return this.wonton;
     }
     

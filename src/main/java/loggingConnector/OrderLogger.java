@@ -59,7 +59,7 @@ public class OrderLogger {
     //Use this for GUI
     //Returns how much there has been discarded
     //Gange med 100 hvis jeg vil have den som %
-    public double getDiscardedRatio(Date from, Date to, String article)  {
+    public synchronized double getDiscardedRatio(Date from, Date to, String article)  {
         try{
             int totalPlanted = 0;
             int totalDiscarded = 0;
@@ -96,7 +96,7 @@ public class OrderLogger {
     
     //Returner et gennemsnit for hvem meget vi returnere ved siden af kundens ønske
     //No article in this method
-    public double getAverageOrderDelay(Date from, Date to){
+    public synchronized int getAverageDeliveryDeviation(Date from, Date to){
         try{
             int delayed = 0;
             int numberOfOrders = 0;
@@ -134,7 +134,7 @@ public class OrderLogger {
     }
 
     //Gennemsnit af dyrkning af en specifik artikel
-    public double getAverageGrowTime(Date from, Date to, String article) {
+    public synchronized int getAverageGrowTime(Date from, Date to, String article) {
         Parameter fromParameter = new Parameter("ordered_for", Operators.GTE, from);
         Parameter toParameter = new Parameter("ordered_for", Operators.LTE, to);
         Parameter articleParameter = new Parameter("article_number", Operators.EQ, article);
@@ -169,7 +169,7 @@ public class OrderLogger {
     }
     
     
-    public void setDatePlanted(String orderId, Date plantedDate){
+    public synchronized void setDatePlanted(String orderId, Date plantedDate){
         Parameter param = new Parameter("order_id", Operators.EQ, orderId);
         ArrayList<Data> dataList = new ArrayList();
         Data data = new Data<>("date_planted", plantedDate);
@@ -177,7 +177,7 @@ public class OrderLogger {
         logService.update(dataList, param);
     }
     
-    public void setDateHarvested(String orderId, Date dateHarvested){
+    public synchronized void setDateHarvested(String orderId, Date dateHarvested){
         Parameter param = new Parameter("order_id", Operators.EQ, orderId);
         ArrayList<Data> dataList = new ArrayList();
         Data data = new Data<>("date_harvested", dateHarvested);
@@ -186,7 +186,7 @@ public class OrderLogger {
     }
     
     
-    public void setDiscarded(String orderId, int discardedAmount){
+    public synchronized void setDiscarded(String orderId, int discardedAmount){
         Parameter param = new Parameter("order_id", Operators.EQ, orderId);
         ArrayList<Data> dataList = new ArrayList();
         Data data = new Data<>("amount_discarded", discardedAmount);
@@ -196,7 +196,7 @@ public class OrderLogger {
         
     }
     
-    public void changeStatus(String orderId, Enum newStatus){
+    public synchronized void changeStatus(String orderId, Enum newStatus){
         Parameter param = new Parameter("order_id", Operators.EQ, orderId);
         ArrayList<Data> dataList = new ArrayList();
         Data data = new Data<> ("status", newStatus.toString());
@@ -204,8 +204,8 @@ public class OrderLogger {
         logService.update(dataList, param);     
     }
     
-    public void setAmountPlanted(String orderId, int newAmount){
-        Parameter param = new Parameter("order_id", Operators.EQ, orderId);
+    public synchronized void setAmountPlanted(String orderId, int newAmount){
+        Parameter param = new Parameter(orderId, Operators.EQ, orderId);
         ArrayList<Data> dataList = new ArrayList();
         Data data = new Data<> ("amount_planted", newAmount);
         dataList.add(data);

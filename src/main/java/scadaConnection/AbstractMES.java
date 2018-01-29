@@ -20,9 +20,12 @@ public abstract class AbstractMES extends UnicastRemoteObject implements IMESSer
     public void addObserver(ISCADAObserver scada) throws RemoteException {
         observers.add(scada);
     }
-    protected void executeOrder(OrderINFO orderINFO) throws ExceedsCapacityException, RemoteException {
+    protected void executeOrder(OrderINFO orderINFO) throws
+            ExceedsCapacityException,
+            RemoteException {
         if(!hasCapacity(orderINFO))
-            throw new ExceedsCapacityException("Order quantity to large, accumulated capacity is below.");
+            throw new ExceedsCapacityException("Order quantity to large, " +
+                    "accumulated capacity is below.");
         boolean capacityMatch=false;
         for (ISCADAObserver wo: observers) {
             if(wo.getCapacity() >= orderINFO.getQuantity()){
@@ -31,7 +34,8 @@ public abstract class AbstractMES extends UnicastRemoteObject implements IMESSer
                     wo.postOrder(orderINFO);
                     break;
                 } catch (RemoteException e) {
-                    System.err.println("Error posting order to SCADA. Deleting observer.");
+                    System.err.println("Error posting order to SCADA. " +
+                            "Deleting observer.");
                     observers.remove(wo);
                     capacityMatch=false;
                     executeOrder(orderINFO);
